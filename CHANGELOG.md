@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-09-13
+
+### Adicionado
+- Modo escuro automático (prefers-color-scheme) e manual (botão Tema), com todos os pares de cor acima de 4,5:1.
+
 ## [1.0.1] - 2026-09-13
 
 ### Corrigido

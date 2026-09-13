@@ -16,7 +16,7 @@ export function desenharGrafico(canvas, voluntarios) {
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+      scales: { y: { beginAtZero: true, ticks: { precision: 0, color: cor('--cor-neutra-600') }, grid: { color: cor('--cor-neutra-300') } }, x: { ticks: { color: cor('--cor-neutra-600') } } }
     }
   });
   return instancia;
