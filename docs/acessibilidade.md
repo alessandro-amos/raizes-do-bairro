@@ -70,4 +70,4 @@ Os tokens são redefinidos em `:root[data-tema="escuro"]`; nenhum componente pre
 | Botão principal | #ffffff / #b5562a | 4,9:1 |
 | Erro / fundo | #ff8a80 / #14181a | 7,8:1 |
 | Foco / fundo | #ffd166 / #14181a | 12,4:1 |
-| Borda de campo / fundo (não texto) | #7a877e / #14181a | 5,3:1 |
+| Borda de campo / fundo (não texto) | #7a877e / #14181a | 4,8:1 |
