@@ -66,6 +66,7 @@ export function renderCadastro(app, params) {
     if (Object.keys(erros).length) {
       mostrarErros(form, erros);
       status.className = 'status falha';
+      status.setAttribute('role', 'alert'); // interrompe o leitor de tela: há erro
       status.textContent = `Corrija ${Object.keys(erros).length} campo(s) destacado(s).`;
       mostrarToast('Há campos com erro no formulário.', 'erro');
       return;
@@ -77,6 +78,7 @@ export function renderCadastro(app, params) {
       btn.classList.remove('carregando'); btn.disabled = false;
       if (!salvo) { status.className = 'status falha'; status.textContent = 'Não foi possível salvar. Verifique o armazenamento do navegador.'; return; }
       store.apagarRascunho();
+      status.setAttribute('role', 'status');
       status.className = 'status ok';
       status.textContent = `Cadastro de ${salvo.nome} salvo com sucesso!`;
       mostrarToast('Cadastro enviado! Obrigado por se voluntariar.');

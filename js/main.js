@@ -14,8 +14,11 @@ function render(html) {
   app.classList.remove('view'); void app.offsetWidth; app.classList.add('view');
   app.innerHTML = html;
   window.scrollTo({ top: 0 });
-  document.querySelector('h1')?.setAttribute('tabindex', '-1');
-  document.querySelector('h1')?.focus({ preventScroll: true });
+  const h1 = document.querySelector('h1');
+  h1?.setAttribute('tabindex', '-1');
+  h1?.focus({ preventScroll: true });
+  const anuncio = document.getElementById('anuncio-rota');
+  if (anuncio && h1) anuncio.textContent = `Página carregada: ${h1.textContent}`; // leitores de tela anunciam a troca de view
 }
 
 registrar('/', () => { document.title = 'Instituto Raízes do Bairro'; render(T.home({ totalVoluntarios: store.listar().length })); });

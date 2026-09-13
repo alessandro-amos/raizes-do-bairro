@@ -41,13 +41,14 @@
   </header>
 
   <!-- Ponto único de renderização da SPA: o router troca o conteúdo aqui -->
+  <p id="anuncio-rota" class="visualmente-oculto" aria-live="polite" aria-atomic="true"></p>
   <main id="conteudo" class="container">
-    <div id="app" class="view" aria-live="polite">
+    <div id="app" class="view">
       <p class="carregando-view">Carregando…</p>
     </div>
   </main>
 
-  <footer class="rodape">
+  <footer class="rodape" aria-label="Rodapé">
     <div class="container">
       <p><small>&copy; 2026 Instituto Raízes do Bairro. Projeto acadêmico.</small></p>
       <nav aria-label="Redes sociais">
@@ -59,7 +60,7 @@
     </div>
   </footer>
 
-  <dialog class="modal" id="modal" aria-labelledby="modal-titulo">
+  <dialog class="modal" id="modal" aria-labelledby="modal-titulo" aria-describedby="modal-texto">
     <div class="modal-corpo">
       <h2 id="modal-titulo"></h2>
       <p id="modal-texto"></p>

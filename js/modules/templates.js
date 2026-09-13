@@ -88,21 +88,21 @@ export function cadastro({ dados = {}, projetoSugerido = '' }) {
     <form id="form-cadastro" novalidate>
       <fieldset>
         <legend>Dados pessoais</legend>
-        <div class="campo campo-meio"><label for="nome">Nome completo *</label><input id="nome" name="nome" type="text" required minlength="5" maxlength="100" autocomplete="name" value="${v('nome')}"><p class="campo-erro" id="erro-nome"></p></div>
-        <div class="campo campo-meio"><label for="cpf">CPF *</label><input id="cpf" name="cpf" type="text" inputmode="numeric" required maxlength="14" placeholder="000.000.000-00" value="${v('cpf')}"><p class="campo-erro" id="erro-cpf"></p></div>
-        <div class="campo campo-meio"><label for="email">E-mail *</label><input id="email" name="email" type="email" required autocomplete="email" value="${v('email')}"><p class="campo-erro" id="erro-email"></p></div>
-        <div class="campo campo-meio"><label for="telefone">Telefone/WhatsApp *</label><input id="telefone" name="telefone" type="tel" inputmode="numeric" required maxlength="15" placeholder="(19) 99999-9999" autocomplete="tel" value="${v('telefone')}"><p class="campo-erro" id="erro-telefone"></p></div>
-        <div class="campo campo-curto"><label for="nascimento">Data de nascimento *</label><input id="nascimento" name="nascimento" type="date" required value="${v('nascimento')}"><p class="campo-erro" id="erro-nascimento"></p></div>
-        <div class="campo campo-curto"><label for="cep">CEP *</label><input id="cep" name="cep" type="text" inputmode="numeric" required maxlength="9" placeholder="13400-000" value="${v('cep')}"><p class="campo-erro" id="erro-cep"></p></div>
+        <div class="campo campo-meio"><label for="nome">Nome completo *</label><input id="nome" aria-describedby="erro-nome" name="nome" type="text" required minlength="5" maxlength="100" autocomplete="name" value="${v('nome')}"><p class="campo-erro" id="erro-nome"></p></div>
+        <div class="campo campo-meio"><label for="cpf">CPF *</label><input id="cpf" aria-describedby="erro-cpf" name="cpf" type="text" inputmode="numeric" required maxlength="14" placeholder="000.000.000-00" value="${v('cpf')}"><p class="campo-erro" id="erro-cpf"></p></div>
+        <div class="campo campo-meio"><label for="email">E-mail *</label><input id="email" aria-describedby="erro-email" name="email" type="email" required autocomplete="email" value="${v('email')}"><p class="campo-erro" id="erro-email"></p></div>
+        <div class="campo campo-meio"><label for="telefone">Telefone/WhatsApp *</label><input id="telefone" aria-describedby="erro-telefone" name="telefone" type="tel" inputmode="numeric" required maxlength="15" placeholder="(19) 99999-9999" autocomplete="tel" value="${v('telefone')}"><p class="campo-erro" id="erro-telefone"></p></div>
+        <div class="campo campo-curto"><label for="nascimento">Data de nascimento *</label><input id="nascimento" aria-describedby="erro-nascimento" name="nascimento" type="date" required value="${v('nascimento')}"><p class="campo-erro" id="erro-nascimento"></p></div>
+        <div class="campo campo-curto"><label for="cep">CEP *</label><input id="cep" aria-describedby="erro-cep" name="cep" type="text" inputmode="numeric" required maxlength="9" placeholder="13400-000" value="${v('cep')}"><p class="campo-erro" id="erro-cep"></p></div>
       </fieldset>
       <fieldset>
         <legend>Como quer ajudar</legend>
-        <div class="campo campo-meio"><label for="projeto">Projeto de interesse *</label><select id="projeto" name="projeto" required><option value="">Selecione…</option>${opcoesProjeto}</select><p class="campo-erro" id="erro-projeto"></p></div>
-        <div class="campo campo-meio"><label for="horas">Horas por semana *</label><input id="horas" name="horas" type="number" min="1" max="20" required value="${v('horas')}"><p class="campo-erro" id="erro-horas"></p></div>
+        <div class="campo campo-meio"><label for="projeto">Projeto de interesse *</label><select id="projeto" aria-describedby="erro-projeto" name="projeto" required><option value="">Selecione…</option>${opcoesProjeto}</select><p class="campo-erro" id="erro-projeto"></p></div>
+        <div class="campo campo-meio"><label for="horas">Horas por semana *</label><input id="horas" aria-describedby="erro-horas" name="horas" type="number" min="1" max="20" required value="${v('horas')}"><p class="campo-erro" id="erro-horas"></p></div>
         <div class="campo"><p id="rotulo-areas"><strong>Áreas em que pode atuar (marque ao menos uma) *</strong></p><div role="group" aria-labelledby="rotulo-areas">${areas}</div><p class="campo-erro" id="erro-areas"></p></div>
-        <div class="campo"><label for="mensagem">Conte um pouco sobre você</label><textarea id="mensagem" name="mensagem" rows="4" maxlength="500">${v('mensagem')}</textarea><p class="contador" id="contador-mensagem">0/500</p></div>
+        <div class="campo"><label for="mensagem">Conte um pouco sobre você</label><textarea id="mensagem" name="mensagem" rows="4" maxlength="500" aria-describedby="contador-mensagem">${v('mensagem')}</textarea><p class="contador" id="contador-mensagem">0/500</p></div>
       </fieldset>
-      <div class="opcoes"><input type="checkbox" id="lgpd" name="lgpd" required ${dados.lgpd ? 'checked' : ''}><label for="lgpd">Autorizo o uso dos meus dados para contato sobre o voluntariado (LGPD). *</label></div>
+      <div class="opcoes"><input type="checkbox" id="lgpd" name="lgpd" required aria-describedby="erro-lgpd" ${dados.lgpd ? 'checked' : ''}><label for="lgpd">Autorizo o uso dos meus dados para contato sobre o voluntariado (LGPD). *</label></div>
       <p class="campo-erro" id="erro-lgpd"></p>
       <p class="acoes">
         <button class="botao" type="submit" id="btn-enviar">Enviar cadastro</button>
