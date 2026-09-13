@@ -33,7 +33,10 @@ export function home({ totalVoluntarios }) {
         <a class="botao botao-secundario" href="#/projetos">Conhecer os projetos</a>
       </p>
       <figure>
-        <img src="img/hero-criancas.jpg" alt="Grupo de crianças em roda de leitura no pátio do instituto" width="1200" height="600">
+        <picture>
+          <source type="image/webp" srcset="img/hero-criancas-480.webp 480w, img/hero-criancas-800.webp 800w, img/hero-criancas-1200.webp 1200w" sizes="(min-width: 900px) 58vw, 100vw">
+          <img src="img/hero-criancas.jpg" alt="Grupo de crianças em roda de leitura no pátio do instituto" width="800" height="400" fetchpriority="high" decoding="async">
+        </picture>
         <figcaption>Roda de leitura do projeto Aprender Junto.</figcaption>
       </figure>
     </section>
@@ -66,7 +69,12 @@ export function detalheProjeto(p) {
     <article class="projeto">
       <p>${badge(p)} <span class="badge">${p.categoria}</span></p>
       <h1>${p.nome}</h1>
-      <figure><img src="${p.imagem}" alt="${p.alt}" width="800" height="500"></figure>
+      <figure>
+        <picture>
+          <source type="image/webp" srcset="${p.imagem.replace('.jpg', '-400.webp')} 400w, ${p.imagem.replace('.jpg', '-800.webp')} 800w" sizes="(min-width: 900px) 800px, 100vw">
+          <img src="${p.imagem}" alt="${p.alt}" width="800" height="500" loading="lazy" decoding="async">
+        </picture>
+      </figure>
       <h2>Público atendido</h2><p>${p.publico}</p>
       <h2>Resultados em 2025</h2>
       <ul>${p.resultados.map((r) => `<li>${r}</li>`).join('')}</ul>
