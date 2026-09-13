@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Valida HTML gerado (W3C Nu)
+        run: |
+          curl -s -H "Content-Type: text/html; charset=utf-8" --data-binary @dist/index.html \
+            "https://validator.w3.org/nu/?out=json" | tee w3c.json
+          node -e "const r=require('./w3c.json'); const e=r.messages.filter(m=>m.type==='error'); if(e.length){console.error(e);process.exit(1)}"

@@ -1,0 +1,20 @@
+{
+  "name": "raizes-do-bairro",
+  "version": "0.9.0",
+  "private": true,
+  "description": "Site SPA do Instituto Raízes do Bairro (ONG de Piracicaba/SP) - projeto acadêmico de Desenvolvimento Front-end",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve -l 5173 .",
+    "build": "node scripts/build.mjs",
+    "preview": "npx serve -l 4173 dist",
+    "lint": "npx eslint js",
+    "audit:a11y": "npx lighthouse http://localhost:4173/ --only-categories=accessibility,performance,best-practices,seo --output=json --output-path=docs/lighthouse.json --chrome-flags='--headless=new'"
+  },
+  "repository": { "type": "git", "url": "https://github.com/alessandro-amos/raizes-do-bairro.git" },
+  "author": "Alessandro Amos <alessandro.amos@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.24.2"
+  }
+}
