@@ -2,6 +2,17 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.2.0] - 2026-09-13
+
+### Adicionado
+- Imagens em WebP com `<picture>`, `srcset`/`sizes`, `loading="lazy"` e `fetchpriority="high"` no hero.
+- Chart.js carregado sob demanda apenas na tela de voluntários (-71 KB na home).
+
+### Corrigido
+- Contraste de botões, badges, rodapé e toast no modo escuro (tokens de superfície).
+- Nome acessível do botão de tema igual ao texto visível.
+- CLS zerado com `aspect-ratio` nas imagens.
+
 ## [1.1.0] - 2026-09-13
 
 ### Adicionado

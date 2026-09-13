@@ -3,9 +3,28 @@
 import { projetos } from '../data/projetos.js';
 
 let instancia = null; // guarda o gráfico atual para destruir antes de redesenhar
+let carregando = null;
 
-export function desenharGrafico(canvas, voluntarios) {
-  if (!canvas || typeof window.Chart === 'undefined') return null; // CDN indisponível: a tabela continua funcionando
+// Carrega o Chart.js (71 KB) sob demanda, só quando a tela de voluntários é aberta
+export function carregarChart() {
+  if (window.Chart) return Promise.resolve(window.Chart);
+  if (!carregando) {
+    carregando = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js';
+      s.async = true;
+      s.onload = () => resolve(window.Chart);
+      s.onerror = () => { carregando = null; reject(new Error('Chart.js indisponível')); };
+      document.head.appendChild(s);
+    });
+  }
+  return carregando;
+}
+
+export async function desenharGrafico(canvas, voluntarios) {
+  if (!canvas) return null;
+  try { await carregarChart(); } catch { return null; } // CDN indisponível: a tabela continua funcionando
+  if (!canvas.isConnected) return null; // usuário já trocou de tela
   const cor = (nome) => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
   const rotulos = projetos.map((p) => p.nome);
   const valores = projetos.map((p) => voluntarios.filter((v) => v.projeto === p.slug).length);

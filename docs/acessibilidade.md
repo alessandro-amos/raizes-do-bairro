@@ -71,3 +71,14 @@ Os tokens são redefinidos em `:root[data-tema="escuro"]`; nenhum componente pre
 | Erro / fundo | #ff8a80 / #14181a | 7,8:1 |
 | Foco / fundo | #ffd166 / #14181a | 12,4:1 |
 | Borda de campo / fundo (não texto) | #7a877e / #14181a | 5,3:1 |
+
+| Botão secundário (ambos os temas) | #ffffff / #1f6f43 | 6,2:1 |
+
+## Performance (v1.2.0, Lighthouse no build)
+
+| Métrica | v1.1.0 | v1.2.0 |
+|---|---|---|
+| Peso total da home | 122 KiB | 53 KiB |
+| LCP | 2,0 s | 1,4 s |
+| CLS | 0,136 | 0 |
+| Chart.js | carregado em todas as rotas | só em /voluntarios |

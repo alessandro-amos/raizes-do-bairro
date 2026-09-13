@@ -17,11 +17,11 @@
     <div class="container">
       <p class="marca">
         <a href="#/">
-          <img src="img/logo.png" alt="Logotipo do Instituto Raízes do Bairro" width="48" height="48">
+          <picture><source type="image/webp" srcset="img/logo.webp"><img src="img/logo.png" alt="Logotipo do Instituto Raízes do Bairro" width="48" height="48" decoding="async"></picture>
           Instituto Raízes do Bairro
         </a>
       </p>
-      <button class="tema-toggle" type="button" id="tema-toggle" aria-pressed="false" aria-label="Alternar modo escuro"><span class="icone-lua" aria-hidden="true">&#9790;</span><span class="icone-sol" aria-hidden="true">&#9728;</span> Tema</button>
+      <button class="tema-toggle" type="button" id="tema-toggle" aria-pressed="false"><span class="icone-lua" aria-hidden="true">&#9790;</span><span class="icone-sol" aria-hidden="true">&#9728;</span> Modo escuro</button>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="barras" aria-hidden="true"></span> Menu</button>
       <nav id="menu" class="menu" aria-label="Menu principal">
         <ul>
@@ -75,8 +75,6 @@
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <!-- Biblioteca externa: Chart.js (UMD, expõe window.Chart). defer garante que carrega antes do módulo usar -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js" defer></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
