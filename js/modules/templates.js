@@ -33,7 +33,7 @@ export function home({ totalVoluntarios }) {
         <a class="botao botao-secundario" href="#/projetos">Conhecer os projetos</a>
       </p>
       <figure>
-        <img src="../img/hero-criancas.jpg" alt="Grupo de crianças em roda de leitura no pátio do instituto" width="1200" height="600">
+        <img src="img/hero-criancas.jpg" alt="Grupo de crianças em roda de leitura no pátio do instituto" width="1200" height="600">
         <figcaption>Roda de leitura do projeto Aprender Junto.</figcaption>
       </figure>
     </section>

@@ -17,8 +17,12 @@ function render(html) {
   const h1 = document.querySelector('h1');
   h1?.setAttribute('tabindex', '-1');
   h1?.focus({ preventScroll: true });
-  const anuncio = document.getElementById('anuncio-rota');
-  if (anuncio && h1) anuncio.textContent = `Página carregada: ${h1.textContent}`; // leitores de tela anunciam a troca de view
+  // leitores de tela anunciam a troca de view (telas interativas injetam o h1 logo depois, por isso o setTimeout)
+  setTimeout(() => {
+    const titulo = document.querySelector('h1')?.textContent;
+    const anuncio = document.getElementById('anuncio-rota');
+    if (anuncio && titulo) anuncio.textContent = `Página carregada: ${titulo}`;
+  }, 0);
 }
 
 registrar('/', () => { document.title = 'Instituto Raízes do Bairro'; render(T.home({ totalVoluntarios: store.listar().length })); });
