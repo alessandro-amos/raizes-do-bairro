@@ -380,7 +380,7 @@ small { display: block; color: var(--cor-neutra-600); font-size: var(--fs-xs); m
 .visualmente-oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* 6. SPA: view, loading e lista de voluntários (EP3) */
-.view { animation: aparecer 200ms ease; }
+.view { animation: aparecer 200ms ease; min-height: 60vh; } /* reserva espaço: rodapé não salta enquanto a view carrega (CLS) */
 @keyframes aparecer { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .carregando-view { padding: var(--sp-12) 0; text-align: center; color: var(--cor-neutra-600); }
 .tabela { width: 100%; border-collapse: collapse; background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); overflow: hidden; }
