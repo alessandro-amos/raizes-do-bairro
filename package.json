@@ -1,6 +1,6 @@
 {
   "name": "raizes-do-bairro",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Site SPA do Instituto Raízes do Bairro (ONG de Piracicaba/SP) - projeto acadêmico de Desenvolvimento Front-end",
   "type": "module",
