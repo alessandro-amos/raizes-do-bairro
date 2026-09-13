@@ -5,7 +5,7 @@ let aoNavegar = null;
 let fallback = null;
 
 export function registrar(padrao, handler) {
-  if (padrao === '*') { fallback = handler; return; } // rota "não encontrada"
+  if (padrao === '*') { fallback = handler; return; } // rota "não encontrada": não vira regex ('^*$' seria inválida)
   // converte "/projetos/:slug" em regex com grupos nomeados
   const chaves = [];
   const regex = new RegExp('^' + padrao.replace(/:(\w+)/g, (_, k) => { chaves.push(k); return '([^/]+)'; }) + '$');
