@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Instituto Raízes do Bairro: educação, alimentação e cidadania para crianças e famílias da zona norte de Piracicaba.">
+  <title>Instituto Raízes do Bairro</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <div class="container">
+      <p class="marca">
+        <a href="#/">
+          <img src="../img/logo.png" alt="Logotipo do Instituto Raízes do Bairro" width="48" height="48">
+          Instituto Raízes do Bairro
+        </a>
+      </p>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="barras" aria-hidden="true"></span> Menu</button>
+      <nav id="menu" class="menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="#/" data-rota="/">Início</a></li>
+          <li class="tem-submenu">
+            <button type="button" aria-expanded="false">Projetos</button>
+            <ul class="submenu">
+              <li><a href="#/projetos" data-rota="/projetos">Todos os projetos</a></li>
+              <li><a href="#/projetos/aprender-junto">Aprender Junto</a></li>
+              <li><a href="#/projetos/cozinha-escola">Cozinha-Escola</a></li>
+              <li><a href="#/projetos/horta-comunitaria">Horta Comunitária</a></li>
+            </ul>
+          </li>
+          <li><a href="#/cadastro" data-rota="/cadastro">Seja voluntário</a></li>
+          <li><a href="#/voluntarios" data-rota="/voluntarios">Voluntários</a></li>
+          <li><a href="#/contato" data-rota="/contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Ponto único de renderização da SPA: o router troca o conteúdo aqui -->
+  <main id="conteudo" class="container">
+    <div id="app" class="view" aria-live="polite">
+      <p class="carregando-view">Carregando…</p>
+    </div>
+  </main>
+
+  <footer class="rodape">
+    <div class="container">
+      <p><small>&copy; 2026 Instituto Raízes do Bairro. Projeto acadêmico.</small></p>
+      <nav aria-label="Redes sociais">
+        <ul>
+          <li><a href="https://instagram.com/raizesdobairro">Instagram</a></li>
+          <li><a href="https://facebook.com/raizesdobairro">Facebook</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+
+  <dialog class="modal" id="modal" aria-labelledby="modal-titulo">
+    <div class="modal-corpo">
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-texto"></p>
+      <p class="acoes">
+        <button class="botao botao-contorno" type="button" data-modal="cancelar">Cancelar</button>
+        <button class="botao" type="button" data-modal="ok">Confirmar</button>
+      </p>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Biblioteca externa: Chart.js (UMD, expõe window.Chart). defer garante que carrega antes do módulo usar -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js" defer></script>
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>
