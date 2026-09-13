@@ -48,3 +48,19 @@ export function marcarRotaAtiva(caminho) {
     if (ativa) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
   });
 }
+
+// Modo escuro manual: sobrepõe a preferência do sistema e persiste no localStorage
+export function iniciarTema() {
+  const btn = document.getElementById('tema-toggle');
+  if (!btn) return;
+  const raiz = document.documentElement;
+  const sistemaEscuro = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const atual = () => raiz.dataset.tema || (sistemaEscuro() ? 'escuro' : 'claro');
+  const aplicar = (tema) => {
+    raiz.dataset.tema = tema;
+    btn.setAttribute('aria-pressed', String(tema === 'escuro'));
+    try { localStorage.setItem('raizes.tema', tema); } catch { /* storage indisponível: só não persiste */ }
+  };
+  btn.setAttribute('aria-pressed', String(atual() === 'escuro'));
+  btn.addEventListener('click', () => aplicar(atual() === 'escuro' ? 'claro' : 'escuro'));
+}

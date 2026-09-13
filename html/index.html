@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Instituto Raízes do Bairro: educação, alimentação e cidadania para crianças e famílias da zona norte de Piracicaba.">
   <title>Instituto Raízes do Bairro</title>
+  <script>try{const t=localStorage.getItem("raizes.tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
   <base href="../">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
@@ -20,6 +21,7 @@
           Instituto Raízes do Bairro
         </a>
       </p>
+      <button class="tema-toggle" type="button" id="tema-toggle" aria-pressed="false" aria-label="Alternar modo escuro"><span class="icone-lua" aria-hidden="true">&#9790;</span><span class="icone-sol" aria-hidden="true">&#9728;</span> Tema</button>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="barras" aria-hidden="true"></span> Menu</button>
       <nav id="menu" class="menu" aria-label="Menu principal">
         <ul>

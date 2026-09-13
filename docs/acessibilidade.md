@@ -54,3 +54,20 @@ Projeto: Instituto Raízes do Bairro (SPA). Revisão feita em 13/09/2026 por Ale
 
 - Testar com NVDA/JAWS no Windows (só VoiceOver foi usado).
 - Legendas/transcrição não se aplicam (não há mídia com áudio).
+
+## Modo escuro (v1.1.0)
+
+Ativado automaticamente por `prefers-color-scheme: dark` ou manualmente pelo botão "Tema" (persistido em `localStorage`, chave `raizes.tema`).
+Os tokens são redefinidos em `:root[data-tema="escuro"]`; nenhum componente precisou de CSS novo além de fundos fixos de alerta.
+
+| Par | Cores (texto / fundo) | Contraste |
+|---|---|---|
+| Texto / fundo | #eef2ee / #14181a | 15,8:1 |
+| Texto / card | #eef2ee / #1e2420 | 14,0:1 |
+| Link / fundo | #6fc48f / #14181a | 8,5:1 |
+| Título / fundo | #a8e0b8 / #14181a | 11,9:1 |
+| Texto de apoio / fundo | #b9c4bc / #14181a | 9,9:1 |
+| Botão principal | #ffffff / #b5562a | 4,9:1 |
+| Erro / fundo | #ff8a80 / #14181a | 7,8:1 |
+| Foco / fundo | #ffd166 / #14181a | 12,4:1 |
+| Borda de campo / fundo (não texto) | #7a877e / #14181a | 5,3:1 |

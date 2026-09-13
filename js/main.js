@@ -3,7 +3,7 @@ import { registrar, iniciar } from './modules/router.js';
 import * as T from './modules/templates.js';
 import { projetos } from './data/projetos.js';
 import { store } from './modules/store.js';
-import { iniciarMenu, marcarRotaAtiva } from './modules/ui.js';
+import { iniciarMenu, marcarRotaAtiva, iniciarTema } from './modules/ui.js';
 import { renderCadastro } from './modules/cadastro.js';
 import { renderVoluntarios } from './modules/voluntarios.js';
 
@@ -34,4 +34,5 @@ registrar('/contato', () => { document.title = 'Contato | Raízes do Bairro'; re
 registrar('*', () => { document.title = 'Página não encontrada'; render(T.naoEncontrado()); });
 
 iniciarMenu();
+iniciarTema();
 iniciar(({ caminho }) => marcarRotaAtiva(caminho));
