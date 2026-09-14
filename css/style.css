@@ -94,6 +94,7 @@ p { margin: 0 0 var(--sp-4); }
 .eyebrow::before { content: ""; width: 28px; height: 3px; background: var(--cor-acento); border-radius: 2px; }
 .destaque { color: var(--cor-secundaria-500); font-style: italic; font-weight: 500; }
 :focus-visible { outline: 3px solid var(--cor-neutra-900); outline-offset: 2px; box-shadow: 0 0 0 2px var(--cor-branco); }
+h1[tabindex="-1"]:focus, h1[tabindex="-1"]:focus-visible { outline: none; box-shadow: none; } /* foco programático após troca de rota: não é interativo */
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -203,7 +204,7 @@ main { padding-block: 0 var(--sp-24); overflow-x: clip; }
 
 /* 4.3 Hero */
 .hero { position: relative; display: grid; gap: var(--sp-8); align-items: center; padding-block: var(--sp-12) var(--sp-16); isolation: isolate; }
-.hero::before { content: ""; position: absolute; inset: auto -10vw -40% auto; width: 60vw; max-width: 720px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--cor-acento) 26%, transparent), transparent 62%); z-index: -1; pointer-events: none; }
+.hero::before { content: ""; position: absolute; right: -8vw; bottom: -8%; width: min(48vw, 560px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--cor-acento) 22%, transparent), transparent 62%); z-index: -1; pointer-events: none; }
 .hero h1 { font-size: var(--fs-3xl); max-width: 12ch; margin-bottom: var(--sp-6); }
 .hero .lead { font-size: 1.2rem; max-width: 48ch; }
 .hero figure { margin: 0; position: relative; }
@@ -401,5 +402,6 @@ small { display: block; color: var(--cor-neutra-600); font-size: var(--fs-xs); m
   --cor-faixa: #1f2f26; --cor-faixa-texto: #eef2ee;
   --sombra-1: 0 1px 2px rgba(0,0,0,.5); --sombra-2: 0 18px 40px -12px rgba(0,0,0,.7);
 }
+:root[data-tema="escuro"] .hero::before { opacity: .45; }
 :root[data-tema="escuro"] .tema-toggle .icone-sol { display: inline; }
 :root[data-tema="escuro"] .tema-toggle .icone-lua { display: none; }
