@@ -23,6 +23,7 @@ da disciplina **Desenvolvimento Front-end para Web** (Ciência da Computação, 
 ## Tecnologias
 
 HTML5 semântico, CSS3 (custom properties, Grid, Flexbox, media queries), JavaScript ES2020 (ES Modules, sem framework),
+fontes [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque) e [Instrument Sans](https://fonts.google.com/specimen/Instrument+Sans) (OFL, self-hosted), fotos do [Unsplash](https://unsplash.com/license),
 [Chart.js](https://www.chartjs.org/) 4 via CDN, [esbuild](https://esbuild.github.io/) para o build, GitHub Actions e GitHub Pages para CI/CD.
 
 ## Estrutura de pastas
@@ -31,7 +32,8 @@ HTML5 semântico, CSS3 (custom properties, Grid, Flexbox, media queries), JavaSc
 raizes-do-bairro/
 ├── html/index.html        # shell da SPA (header, #app, footer, modal, toast)
 ├── css/                   # reset.css e style.css (design system + componentes)
-├── img/                   # imagens otimizadas
+├── img/                   # fotos em WebP responsivo + JPEG fallback (créditos em CREDITOS.md)
+├── fonts/                 # woff2 self-hosted (subset latin)
 ├── js/
 │   ├── main.js            # ponto de entrada: registra rotas e renderiza
 │   ├── data/projetos.js   # dados dos projetos
