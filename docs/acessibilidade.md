@@ -82,3 +82,19 @@ Os tokens são redefinidos em `:root[data-tema="escuro"]`; nenhum componente pre
 | LCP | 2,0 s | 1,4 s |
 | CLS | 0,136 | 0 |
 | Chart.js | carregado em todas as rotas | só em /voluntarios |
+
+## Redesign v1.3.0
+
+Nova paleta (papel #f6f1e8, verde #173f2c/#24603f, terracota #b5562a, mostarda #e6a92b) e fontes Bricolage Grotesque + Instrument Sans (self-hosted, `font-display: optional` para não causar layout shift).
+
+| Par | Cores (texto / fundo) | Contraste |
+|---|---|---|
+| Texto / papel | #1a1f1c / #f6f1e8 | 15,3:1 |
+| Texto de apoio / papel | #545c57 / #f6f1e8 | 6,1:1 |
+| Link / card | #24603f / #fffdf9 | 7,3:1 |
+| Eyebrow terracota / papel | #a04a1f / #f6f1e8 | 5,3:1 |
+| Botão principal | #ffffff / #b5562a | 4,9:1 |
+| Números mostarda / faixa verde | #e6a92b / #173f2c | 5,7:1 |
+| Chamada (texto branco / terracota) | #ffffff / #b5562a | 4,9:1 |
+
+Lighthouse do build (mobile): performance 97, acessibilidade 100, boas práticas 96, SEO 100, CLS 0.

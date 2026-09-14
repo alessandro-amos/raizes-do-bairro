@@ -11,7 +11,7 @@ export const projetos = [
     resultados: ['92% das crianças avançaram um nível de leitura em 2025', '38 famílias acompanhadas pela equipe pedagógica', '4 voluntários formados em alfabetização'],
     horarios: 'Segunda a quinta, 13h30 às 17h',
     imagem: 'img/projeto-aprender.jpg',
-    alt: 'Crianças em roda de leitura no pátio, acompanhadas por uma educadora'
+    alt: 'Crianças deitadas no tapete folheando um livro ilustrado'
   },
   {
     slug: 'cozinha-escola',
@@ -24,7 +24,7 @@ export const projetos = [
     resultados: ['3 turmas concluídas, 41 pessoas formadas', '12 participantes hoje vendem marmitas e doces', '1.800 refeições doadas às famílias atendidas'],
     horarios: 'Terça e quinta, 14h às 17h',
     imagem: 'img/projeto-cozinha.jpg',
-    alt: 'Alunas da cozinha-escola preparando marmitas em bancada de inox'
+    alt: 'Grupo de adultos cozinhando juntos em uma cozinha industrial, com legumes na frigideira'
   },
   {
     slug: 'horta-comunitaria',
@@ -37,7 +37,7 @@ export const projetos = [
     resultados: ['1,2 tonelada de hortaliças colhidas em 2025', '140 cestas mensais complementadas com verduras', 'Turma 2025 encerrada; nova turma em março de 2027'],
     horarios: 'Sábados, 8h às 11h',
     imagem: 'img/projeto-horta.jpg',
-    alt: 'Canteiros da horta comunitária com voluntários colhendo alface'
+    alt: 'Vista de cima de canteiros de madeira em uma horta comunitária, com duas pessoas cuidando das plantas'
   }
 ];
 
