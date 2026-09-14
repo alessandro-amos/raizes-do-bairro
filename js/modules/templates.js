@@ -13,74 +13,146 @@ export function badge(projeto) {
 }
 
 // Componente reutilizável: card de projeto (usado na home e na lista de projetos)
+function foto(p, { lazy = true } = {}) {
+  return `<picture>
+          <source type="image/webp" srcset="${p.imagem.replace('.jpg', '-400.webp')} 400w, ${p.imagem.replace('.jpg', '-800.webp')} 800w" sizes="(min-width: 900px) 30vw, 100vw">
+          <img src="${p.imagem}" alt="${p.alt}" width="800" height="500" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async">
+        </picture>`;
+}
+
 export function cardProjeto(p) {
   return `
     <article class="card" id="${p.slug}">
-      <p>${badge(p)} <span class="badge">${p.categoria}</span></p>
-      <h3>${p.nome}</h3>
-      <p>${p.resumo}</p>
-      <a class="botao botao-contorno" href="#/projetos/${p.slug}">Ver projeto</a>
+      <a href="#/projetos/${p.slug}" tabindex="-1" aria-hidden="true">${foto(p)}</a>
+      <div class="card-corpo">
+        <p class="etiquetas">${badge(p)} <span class="badge">${p.categoria}</span></p>
+        <h3><a href="#/projetos/${p.slug}" class="link-card">${p.nome}</a></h3>
+        <p>${p.resumo}</p>
+        <a class="link-seta" href="#/projetos/${p.slug}">Conhecer o projeto</a>
+      </div>
     </article>`;
 }
 
 export function home({ totalVoluntarios }) {
+  const icones = {
+    tempo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    doacao: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>',
+    empresa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>'
+  };
   return `
     <section class="hero" aria-labelledby="titulo-principal">
-      <h1 id="titulo-principal">Instituto Raízes do Bairro</h1>
-      <p class="lead">Desde 2014 cuidamos de crianças e famílias da zona norte de Piracicaba com reforço escolar, alimentação e formação profissional.</p>
+      <p class="eyebrow">ONG · Jardim Oriente, Piracicaba</p>
+      <h1 id="titulo-principal">Criança que lê, come bem e sonha <span class="destaque">muda o bairro</span>.</h1>
+      <p class="lead">Desde 2014, moradores do Jardim Oriente mantêm reforço escolar, cozinha-escola e horta comunitária para 320 crianças e 140 famílias por ano.</p>
       <p class="acoes">
         <a class="botao" href="#/cadastro">Quero ser voluntário</a>
-        <a class="botao botao-secundario" href="#/projetos">Conhecer os projetos</a>
+        <a class="botao botao-contorno sem-seta" href="#/projetos">Conhecer os projetos</a>
       </p>
+      <p class="confianca"><span>Sem fins lucrativos</span><span>Prestação de contas anual</span><span>${totalVoluntarios > 0 ? `${totalVoluntarios} voluntário${totalVoluntarios === 1 ? '' : 's'} cadastrado${totalVoluntarios === 1 ? '' : 's'}` : 'Feito por moradores do bairro'}</span></p>
       <figure>
         <picture>
-          <source type="image/webp" srcset="img/hero-criancas-480.webp 480w, img/hero-criancas-800.webp 800w, img/hero-criancas-1200.webp 1200w" sizes="(min-width: 900px) 58vw, 100vw">
-          <img src="img/hero-criancas.jpg" alt="Grupo de crianças em roda de leitura no pátio do instituto" width="800" height="400" fetchpriority="high" decoding="async">
+          <source type="image/webp" srcset="img/hero-criancas-480.webp 480w, img/hero-criancas-800.webp 800w, img/hero-criancas-1200.webp 1200w" sizes="(min-width: 900px) 50vw, 100vw">
+          <img src="img/hero-criancas.jpg" alt="Crianças em volta de uma mesa folheando livros ilustrados, com um educador ao lado" width="800" height="600" fetchpriority="high" decoding="async">
         </picture>
-        <figcaption>Roda de leitura do projeto Aprender Junto.</figcaption>
+        <figcaption>Roda de leitura do Aprender Junto</figcaption>
+        <p class="selo" aria-hidden="true"><span><strong>12</strong>anos de bairro</span></p>
       </figure>
     </section>
-    <section aria-labelledby="t-numeros">
-      <h2 id="t-numeros">Nossos números</h2>
-      <dl class="numeros">
-        <div><dt>Crianças atendidas</dt><dd>320</dd></div>
-        <div><dt>Famílias</dt><dd>140</dd></div>
-        <div><dt>Voluntários cadastrados</dt><dd>${totalVoluntarios}</dd></div>
-        <div><dt>Refeições em 2025</dt><dd>18 mil</dd></div>
-      </dl>
+
+    <section class="secao" aria-labelledby="t-numeros">
+      <div class="faixa">
+        <h2 id="t-numeros">O que a comunidade construiu em 2025</h2>
+        <dl class="numeros">
+          <div><dd>320</dd><dt>crianças atendidas</dt></div>
+          <div><dd>140</dd><dt>famílias acompanhadas</dt></div>
+          <div><dd>18 mil</dd><dt>refeições servidas</dt></div>
+          <div><dd>1,2 t</dd><dt>de hortaliças colhidas</dt></div>
+        </dl>
+      </div>
     </section>
-    <section aria-labelledby="t-projetos">
-      <h2 id="t-projetos">Projetos ativos</h2>
-      <div class="cards">${projetos.filter((p) => p.status === 'ativo').map(cardProjeto).join('')}</div>
+
+    <section class="secao" aria-labelledby="t-projetos">
+      <div class="secao-cabecalho">
+        <div><p class="eyebrow">Projetos</p><h2 id="t-projetos">Três frentes, todas tocadas por gente do bairro</h2></div>
+        <a class="link-seta" href="#/projetos">Ver todos os projetos</a>
+      </div>
+      <div class="cards">${projetos.map(cardProjeto).join('')}</div>
+    </section>
+
+    <section class="secao" aria-labelledby="t-depoimento">
+      <div class="depoimento">
+        <picture>
+          <source type="image/webp" srcset="img/depoimento-400.webp 400w, img/depoimento-640.webp 640w" sizes="(min-width: 900px) 34vw, 100vw">
+          <img src="img/depoimento.jpg" alt="Dois meninos sentados na calçada lendo o mesmo livro, em frente a um muro grafitado" width="600" height="750" loading="lazy" decoding="async">
+        </picture>
+        <blockquote>
+          <h2 id="t-depoimento" class="visualmente-oculto">Depoimento</h2>
+          <p>Meu filho não gostava de escola. Hoje ele chega em casa e lê para a irmã. A gente não tinha isso, e agora tem, aqui na nossa rua.</p>
+          <footer>Rosângela, mãe do Kauã, 9 anos, do Aprender Junto</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="t-ajudar">
+      <div class="secao-cabecalho">
+        <div><p class="eyebrow">Como ajudar</p><h2 id="t-ajudar">Tem espaço para você</h2></div>
+      </div>
+      <div class="ajudar">
+        <article><div class="icone">${icones.tempo}</div><h3>Doe tempo</h3><p>Duas horas por semana já fazem diferença: leitura, cozinha, horta ou apoio administrativo.</p><a class="link-seta" href="#/cadastro">Cadastrar como voluntário</a></article>
+        <article><div class="icone">${icones.doacao}</div><h3>Doe alimentos ou recursos</h3><p>Cada cesta mensal custa R$ 180. Doações via Pix são publicadas no relatório de transparência.</p><a class="link-seta" href="#/contato">Falar com a coordenação</a></article>
+        <article><div class="icone">${icones.empresa}</div><h3>Seja empresa parceira</h3><p>Apadrinhe uma turma, ofereça vagas de estágio aos jovens da Cozinha-Escola ou patrocine a horta.</p><a class="link-seta" href="#/contato">Propor parceria</a></article>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="t-chamada">
+      <div class="chamada">
+        <div>
+          <h2 id="t-chamada">Duas horas por semana. Uma criança a mais lendo.</h2>
+          <p>Não precisa ser professor. Precisa aparecer. A coordenação acompanha cada voluntário nas primeiras semanas.</p>
+          <p class="acoes"><a class="botao botao-claro" href="#/cadastro">Quero ser voluntário</a></p>
+        </div>
+        <picture>
+          <source type="image/webp" srcset="img/voluntario-400.webp 400w, img/voluntario-640.webp 640w" sizes="(min-width: 900px) 28vw, 100vw">
+          <img src="img/voluntario.jpg" alt="Mão de um adulto apontando uma página de livro ilustrado para uma criança" width="600" height="800" loading="lazy" decoding="async">
+        </picture>
+      </div>
     </section>`;
 }
 
 export function listaProjetos() {
   return `
-    <h1>Nossos projetos</h1>
-    <p class="lead">Três frentes permanentes, todas tocadas por gente do bairro.</p>
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Projetos</p>
+      <h1>Nossos projetos</h1>
+      <p class="lead">Três frentes permanentes no Jardim Oriente: educação, renda e alimentação. Todas nasceram de pedidos da própria comunidade.</p>
+    </header>
     <div class="cards">${projetos.map(cardProjeto).join('')}</div>`;
 }
 
 export function detalheProjeto(p) {
   if (!p) return naoEncontrado();
   return `
-    <p><a href="#/projetos">&larr; Todos os projetos</a></p>
-    <article class="projeto">
-      <p>${badge(p)} <span class="badge">${p.categoria}</span></p>
+    <header class="cabecalho-pagina">
+      <p><a class="link-seta" href="#/projetos" style="display:inline-block;transform:scaleX(-1)"></a><a href="#/projetos">Todos os projetos</a></p>
+      <p class="etiquetas">${badge(p)} <span class="badge">${p.categoria}</span></p>
       <h1>${p.nome}</h1>
-      <figure>
-        <picture>
-          <source type="image/webp" srcset="${p.imagem.replace('.jpg', '-400.webp')} 400w, ${p.imagem.replace('.jpg', '-800.webp')} 800w" sizes="(min-width: 900px) 800px, 100vw">
-          <img src="${p.imagem}" alt="${p.alt}" width="800" height="500" loading="lazy" decoding="async">
-        </picture>
-      </figure>
-      <h2>Público atendido</h2><p>${p.publico}</p>
-      <h2>Resultados em 2025</h2>
-      <ul>${p.resultados.map((r) => `<li>${r}</li>`).join('')}</ul>
-      <h2>Como participar</h2>
-      <p>Horários: ${p.horarios}.</p>
-      ${p.status === 'ativo' ? `<a class="botao" href="#/cadastro?projeto=${p.slug}">Quero ajudar neste projeto</a>` : '<span class="botao" aria-disabled="true">Inscrições encerradas</span>'}
+      <p class="lead">${p.resumo}</p>
+    </header>
+    <article class="projeto-detalhe">
+      <div class="conteudo">
+        ${foto(p, { lazy: false })}
+        <h2>Público atendido</h2><p>${p.publico}</p>
+        <h2>Resultados em 2025</h2>
+        <ul>${p.resultados.map((r) => `<li>${r}</li>`).join('')}</ul>
+      </div>
+      <aside class="ficha" aria-label="Como participar">
+        <dl>
+          <dt>Horários</dt><dd>${p.horarios}</dd>
+          <dt>Situação</dt><dd>${p.status === 'ativo' ? `${p.vagas} vaga${p.vagas === 1 ? '' : 's'} para voluntários` : 'Turma encerrada'}</dd>
+          <dt>Onde</dt><dd>Sede do instituto, Rua das Palmeiras, 380</dd>
+        </dl>
+        ${p.status === 'ativo' ? `<a class="botao" href="#/cadastro?projeto=${p.slug}">Quero ajudar neste projeto</a>` : '<span class="botao sem-seta" aria-disabled="true">Inscrições encerradas</span>'}
+      </aside>
     </article>`;
 }
 
@@ -91,8 +163,12 @@ export function cadastro({ dados = {}, projetoSugerido = '' }) {
   const areas = areasAtuacao.map((a) => `
       <div class="opcoes"><input type="checkbox" id="area-${a}" name="areas" value="${a}" ${(dados.areas || []).includes(a) ? 'checked' : ''}><label for="area-${a}">${a}</label></div>`).join('');
   return `
-    <h1>Cadastro de voluntário</h1>
-    <p class="lead">Preencha os dados abaixo. Os campos com * são obrigatórios. Seus dados ficam salvos neste navegador.</p>
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Voluntariado</p>
+      <h1>Cadastro de voluntário</h1>
+      <p class="lead">Leva uns três minutos. Os campos com * são obrigatórios e o rascunho fica salvo neste navegador.</p>
+    </header>
+    <div class="pagina-form">
     <form id="form-cadastro" novalidate>
       <fieldset>
         <legend>Dados pessoais</legend>
@@ -117,7 +193,17 @@ export function cadastro({ dados = {}, projetoSugerido = '' }) {
         <button class="botao botao-contorno" type="button" id="btn-limpar">Limpar</button>
       </p>
       <p id="mensagem-status" class="status" role="status" aria-live="polite"></p>
-    </form>`;
+    </form>
+    <aside aria-labelledby="t-proximos">
+      <h2 id="t-proximos">O que acontece depois</h2>
+      <ol>
+        <li>A coordenação lê seu cadastro e liga em até 3 dias úteis.</li>
+        <li>Você visita a sede e conhece o projeto escolhido.</li>
+        <li>Nas primeiras semanas, alguém da equipe acompanha você.</li>
+      </ol>
+      <p><small>Dúvidas? <a href="#/contato">Fale com a gente</a>.</small></p>
+    </aside>
+    </div>`;
 }
 
 export function voluntarios(lista, filtro = '') {
@@ -133,8 +219,11 @@ export function voluntarios(lista, filtro = '') {
         <td><button class="botao botao-contorno" type="button" data-remover="${escapar(v.id)}">Remover</button></td>
       </tr>`).join('');
   return `
-    <h1>Voluntários cadastrados</h1>
-    <p class="lead">Lista salva localmente no navegador (localStorage). ${lista.length} registro(s).</p>
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Coordenação</p>
+      <h1>Voluntários cadastrados</h1>
+      <p class="lead">Lista salva localmente no navegador (localStorage). ${lista.length} registro(s).</p>
+    </header>
     <div class="filtros">
       <div><label for="busca">Buscar por nome ou projeto</label><input id="busca" type="search" value="${escapar(filtro)}" placeholder="Ex.: Maria, cozinha"></div>
       <button class="botao botao-contorno" type="button" id="btn-exportar">Exportar JSON</button>
@@ -146,14 +235,29 @@ export function voluntarios(lista, filtro = '') {
 
 export function contato() {
   return `
-    <h1>Contato</h1>
-    <address>
-      <p>Rua das Palmeiras, 380 - Jardim Oriente, Piracicaba/SP, CEP 13403-560</p>
-      <p>Telefone/WhatsApp: <a href="tel:+551934210000">(19) 3421-0000</a></p>
-      <p>E-mail: <a href="mailto:contato@raizesdobairro.org.br">contato@raizesdobairro.org.br</a></p>
-    </address>`;
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Contato</p>
+      <h1>Fale com a gente</h1>
+      <p class="lead">A sede fica aberta de segunda a sexta, das 8h às 18h. Para doações e parcerias, prefira o e-mail.</p>
+    </header>
+    <div class="contato">
+      <div class="bloco">
+        <h2>Sede</h2>
+        <address>
+          <span>Rua das Palmeiras, 380 - Jardim Oriente</span>
+          <span>Piracicaba/SP, CEP 13403-560</span>
+          <a href="tel:+551934210000">(19) 3421-0000</a>
+          <a href="mailto:contato@raizesdobairro.org.br">contato@raizesdobairro.org.br</a>
+        </address>
+      </div>
+      <div class="bloco">
+        <h2>Transparência</h2>
+        <p>Relatório anual de atividades e prestação de contas disponíveis para consulta na sede e por e-mail.</p>
+        <p>CNPJ 00.000.000/0001-00 · Fundado em março de 2014</p>
+      </div>
+    </div>`;
 }
 
 export function naoEncontrado() {
-  return `<h1>Página não encontrada</h1><p>O endereço não existe. <a href="#/">Voltar ao início</a>.</p>`;
+  return `<header class="cabecalho-pagina"><h1>Página não encontrada</h1><p class="lead">O endereço não existe. <a href="#/">Voltar ao início</a>.</p></header>`;
 }

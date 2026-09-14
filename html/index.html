@@ -7,6 +7,9 @@
   <title>Instituto Raízes do Bairro</title>
   <script>try{const t=localStorage.getItem("raizes.tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
   <base href="../">
+  <link rel="preload" href="fonts/BricolageGrotesque-normal-500-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/InstrumentSans-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -18,11 +21,13 @@
       <p class="marca">
         <a href="#/">
           <picture><source type="image/webp" srcset="img/logo.webp"><img src="img/logo.png" alt="Logotipo do Instituto Raízes do Bairro" width="48" height="48" decoding="async"></picture>
-          Instituto Raízes do Bairro
+          <span>Instituto Raízes do Bairro<small>Jardim Oriente · Piracicaba</small></span>
         </a>
       </p>
-      <button class="tema-toggle" type="button" id="tema-toggle" aria-pressed="false"><span class="icone-lua" aria-hidden="true">&#9790;</span><span class="icone-sol" aria-hidden="true">&#9728;</span> Modo escuro</button>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="barras" aria-hidden="true"></span> Menu</button>
+      <div class="acoes-topo">
+        <button class="tema-toggle" type="button" id="tema-toggle" aria-pressed="false"><span class="icone-lua" aria-hidden="true">&#9790;</span><span class="icone-sol" aria-hidden="true">&#9728;</span><span class="tema-texto"> Modo escuro</span></button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="barras" aria-hidden="true"></span> Menu</button>
+      </div>
       <nav id="menu" class="menu" aria-label="Menu principal">
         <ul>
           <li><a href="#/" data-rota="/">Início</a></li>
@@ -35,9 +40,9 @@
               <li><a href="#/projetos/horta-comunitaria">Horta Comunitária</a></li>
             </ul>
           </li>
-          <li><a href="#/cadastro" data-rota="/cadastro">Seja voluntário</a></li>
           <li><a href="#/voluntarios" data-rota="/voluntarios">Voluntários</a></li>
           <li><a href="#/contato" data-rota="/contato">Contato</a></li>
+          <li class="cta-menu"><a href="#/cadastro" data-rota="/cadastro">Seja voluntário</a></li>
         </ul>
       </nav>
     </div>
@@ -53,13 +58,40 @@
 
   <footer class="rodape" aria-label="Rodapé">
     <div class="container">
-      <p><small>&copy; 2026 Instituto Raízes do Bairro. Projeto acadêmico.</small></p>
-      <nav aria-label="Redes sociais">
-        <ul>
-          <li><a href="https://instagram.com/raizesdobairro">Instagram</a></li>
-          <li><a href="https://facebook.com/raizesdobairro">Facebook</a></li>
-        </ul>
-      </nav>
+      <div class="colunas">
+        <div>
+          <p class="marca-rodape">Instituto Raízes do Bairro</p>
+          <p class="suave">Organização da sociedade civil fundada em 2014 por moradores do Jardim Oriente, em Piracicaba/SP. Educação, alimentação e renda, feitos por gente do bairro.</p>
+        </div>
+        <nav aria-label="Páginas">
+          <h2>Navegação</h2>
+          <ul>
+            <li><a href="#/projetos">Projetos</a></li>
+            <li><a href="#/cadastro">Seja voluntário</a></li>
+            <li><a href="#/voluntarios">Voluntários cadastrados</a></li>
+            <li><a href="#/contato">Contato e transparência</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Contato</h2>
+          <address>
+            <p>Rua das Palmeiras, 380<br>Jardim Oriente, Piracicaba/SP</p>
+            <p><a href="tel:+551934210000">(19) 3421-0000</a><br><a href="mailto:contato@raizesdobairro.org.br">contato@raizesdobairro.org.br</a></p>
+          </address>
+        </div>
+        <nav aria-label="Redes sociais">
+          <h2>Redes</h2>
+          <ul>
+            <li><a href="https://instagram.com/raizesdobairro">Instagram</a></li>
+            <li><a href="https://facebook.com/raizesdobairro">Facebook</a></li>
+            <li><a href="https://github.com/alessandro-amos/raizes-do-bairro">Código no GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="base">
+        <small>&copy; 2026 Instituto Raízes do Bairro. Projeto acadêmico de Alessandro Amos.</small>
+        <small>Fotos: <a href="https://unsplash.com/license">Unsplash</a></small>
+      </div>
     </div>
   </footer>
 

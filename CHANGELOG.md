@@ -2,6 +2,17 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.3.0] - 2026-09-14
+
+### Alterado
+- Redesign completo: nova paleta (papel, verde, terracota, mostarda), fontes Bricolage Grotesque e Instrument Sans self-hosted, hero assimétrico com selo, faixa de números, depoimento, seção "Como ajudar", chamada final e rodapé em colunas.
+- Fotos reais (Unsplash) em WebP responsivo substituem os placeholders; créditos em img/CREDITOS.md.
+- Páginas de projeto com ficha lateral fixa; cadastro com coluna "O que acontece depois".
+
+### Corrigido
+- Submenu abria no mobile por especificidade de `.menu ul`.
+- Overflow horizontal no mobile causado pelo brilho decorativo do hero.
+
 ## [1.2.0] - 2026-09-13
 
 ### Adicionado

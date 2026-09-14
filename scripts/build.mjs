@@ -21,12 +21,13 @@ const js = await build({
 
 // 2) CSS: reset + style concatenados e minificados
 await build({
-  entryPoints: [path.join(raiz, 'css/reset.css'), path.join(raiz, 'css/style.css')],
-  bundle: true, minify: true, outdir: path.join(dist, 'css'), loader: { '.png': 'file', '.jpg': 'file' }
+  entryPoints: [path.join(raiz, 'css/reset.css'), path.join(raiz, 'css/fonts.css'), path.join(raiz, 'css/style.css')],
+  bundle: true, minify: true, outdir: path.join(dist, 'css'), loader: { '.png': 'file', '.jpg': 'file' }, external: ['*.woff2']
 });
 
 // 3) Imagens
 await cp(path.join(raiz, 'img'), path.join(dist, 'img'), { recursive: true });
+await cp(path.join(raiz, 'fonts'), path.join(dist, 'fonts'), { recursive: true });
 
 // 4) HTML: sai de html/index.html para dist/index.html; caminhos ../ viram ./ e ganham hash para cache
 const hash = (buf) => createHash('md5').update(buf).digest('hex').slice(0, 8);
@@ -36,6 +37,7 @@ let html = await readFile(path.join(raiz, 'html/index.html'), 'utf8');
 html = html
   .replace('  <base href="../">\n', '')
   .replace('<link rel="stylesheet" href="css/reset.css">\n', '')
+  .replace('<link rel="stylesheet" href="css/fonts.css">\n', '')
   .replace('css/style.css', `css/style.css?v=${hCss}`)
   .replace('js/main.js', `js/main.js?v=${hJs}`)
   .replace(/\n\s*<!--[^>]*-->/g, '')
