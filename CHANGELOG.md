@@ -2,6 +2,12 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versionamento [SemVer](https://semver.org/lang/pt-BR/).
 
+## [1.3.1] - 2026-09-14
+
+### Corrigido
+- Anel de foco aparecia no h1 a cada troca de rota (foco programático).
+- Brilho decorativo do hero invadia a faixa de números em telas altas e no modo escuro.
+
 ## [1.3.0] - 2026-09-14
 
 ### Alterado
