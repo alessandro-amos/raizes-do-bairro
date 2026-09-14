@@ -1,0 +1,1515 @@
+Instituto Raízes do Bairro - código-fonte v1.3.1 (tag v1.3.1, branch main)
+Repositório: https://github.com/alessandro-amos/raizes-do-bairro
+Produção: https://alessandro-amos.github.io/raizes-do-bairro/
+Estrutura: html/ css/ img/ fonts/ js/ scripts/ docs/ .github/workflows/
+
+
+===================== package.json =====================
+{
+  "name": "raizes-do-bairro",
+  "version": "1.3.1",
+  "private": true,
+  "description": "Site SPA do Instituto Raízes do Bairro (ONG de Piracicaba/SP) - projeto acadêmico de Desenvolvimento Front-end",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve -l 5173 .",
+    "build": "node scripts/build.mjs",
+    "preview": "npx serve -l 4173 dist",
+    "lint": "npx eslint js",
+    "audit:a11y": "npx lighthouse http://localhost:4173/ --only-categories=accessibility,performance,best-practices,seo --output=json --output-path=docs/lighthouse.json --chrome-flags='--headless=new'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alessandro-amos/raizes-do-bairro.git"
+  },
+  "author": "Alessandro Amos <alessandro.amos@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.24.2"
+  }
+}
+
+
+===================== html/index.html =====================
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Instituto Raízes do Bairro: educação, alimentação e cidadania para crianças e famílias da zona norte de Piracicaba.">
+  <title>Instituto Raízes do Bairro</title>
+  <script>try{const t=localStorage.getItem("raizes.tema");if(t)document.documentElement.dataset.tema=t;}catch(e){}</script>
+  <base href="../">
+  <link rel="preload" href="fonts/BricolageGrotesque-normal-500-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/InstrumentSans-normal-400-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="topo">
+    <div class="container">
+      <p class="marca">
+        <a href="#/">
+          <picture><source type="image/webp" srcset="img/logo.webp"><img src="img/logo.png" alt="Logotipo do Instituto Raízes do Bairro" width="48" height="48" decoding="async"></picture>
+          <span>Instituto Raízes do Bairro<small>Jardim Oriente · Piracicaba</small></span>
+        </a>
+      </p>
+      <div class="acoes-topo">
+        <button class="tema-toggle" type="button" id="tema-toggle" aria-pressed="false"><span class="icone-lua" aria-hidden="true">&#9790;</span><span class="icone-sol" aria-hidden="true">&#9728;</span><span class="tema-texto"> Modo escuro</span></button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu"><span class="barras" aria-hidden="true"></span> Menu</button>
+      </div>
+      <nav id="menu" class="menu" aria-label="Menu principal">
+        <ul>
+          <li><a href="#/" data-rota="/">Início</a></li>
+          <li class="tem-submenu">
+            <button type="button" aria-expanded="false">Projetos</button>
+            <ul class="submenu">
+              <li><a href="#/projetos" data-rota="/projetos">Todos os projetos</a></li>
+              <li><a href="#/projetos/aprender-junto">Aprender Junto</a></li>
+              <li><a href="#/projetos/cozinha-escola">Cozinha-Escola</a></li>
+              <li><a href="#/projetos/horta-comunitaria">Horta Comunitária</a></li>
+            </ul>
+          </li>
+          <li><a href="#/voluntarios" data-rota="/voluntarios">Voluntários</a></li>
+          <li><a href="#/contato" data-rota="/contato">Contato</a></li>
+          <li class="cta-menu"><a href="#/cadastro" data-rota="/cadastro">Seja voluntário</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Ponto único de renderização da SPA: o router troca o conteúdo aqui -->
+  <p id="anuncio-rota" class="visualmente-oculto" aria-live="polite" aria-atomic="true"></p>
+  <main id="conteudo" class="container">
+    <div id="app" class="view">
+      <p class="carregando-view">Carregando…</p>
+    </div>
+  </main>
+
+  <footer class="rodape" aria-label="Rodapé">
+    <div class="container">
+      <div class="colunas">
+        <div>
+          <p class="marca-rodape">Instituto Raízes do Bairro</p>
+          <p class="suave">Organização da sociedade civil fundada em 2014 por moradores do Jardim Oriente, em Piracicaba/SP. Educação, alimentação e renda, feitos por gente do bairro.</p>
+        </div>
+        <nav aria-label="Páginas">
+          <h2>Navegação</h2>
+          <ul>
+            <li><a href="#/projetos">Projetos</a></li>
+            <li><a href="#/cadastro">Seja voluntário</a></li>
+            <li><a href="#/voluntarios">Voluntários cadastrados</a></li>
+            <li><a href="#/contato">Contato e transparência</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2>Contato</h2>
+          <address>
+            <p>Rua das Palmeiras, 380<br>Jardim Oriente, Piracicaba/SP</p>
+            <p><a href="tel:+551934210000">(19) 3421-0000</a><br><a href="mailto:contato@raizesdobairro.org.br">contato@raizesdobairro.org.br</a></p>
+          </address>
+        </div>
+        <nav aria-label="Redes sociais">
+          <h2>Redes</h2>
+          <ul>
+            <li><a href="https://instagram.com/raizesdobairro">Instagram</a></li>
+            <li><a href="https://facebook.com/raizesdobairro">Facebook</a></li>
+            <li><a href="https://github.com/alessandro-amos/raizes-do-bairro">Código no GitHub</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="base">
+        <small>&copy; 2026 Instituto Raízes do Bairro. Projeto acadêmico de Alessandro Amos.</small>
+        <small>Fotos: <a href="https://unsplash.com/license">Unsplash</a></small>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="modal" id="modal" aria-labelledby="modal-titulo" aria-describedby="modal-texto">
+    <div class="modal-corpo">
+      <h2 id="modal-titulo"></h2>
+      <p id="modal-texto"></p>
+      <p class="acoes">
+        <button class="botao botao-contorno" type="button" data-modal="cancelar">Cancelar</button>
+        <button class="botao" type="button" data-modal="ok">Confirmar</button>
+      </p>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
+
+
+===================== css/reset.css =====================
+/* reset.css - normalização mínima */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body, h1, h2, h3, h4, p, ul, ol, figure, fieldset, dl, dd { margin: 0; }
+ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+img, picture { display: block; max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+
+
+===================== css/fonts.css =====================
+/* Fontes self-hosted (Google Fonts, licença OFL): Bricolage Grotesque e Instrument Sans, subset latin */
+@font-face { font-family: 'Bricolage Grotesque'; font-style: normal; font-weight: 500 800; font-display: optional; src: url('../fonts/BricolageGrotesque-normal-500-800.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Instrument Sans'; font-style: italic; font-weight: 400; font-display: optional; src: url('../fonts/InstrumentSans-italic-400.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Instrument Sans'; font-style: normal; font-weight: 400 700; font-display: optional; src: url('../fonts/InstrumentSans-normal-400-700.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+
+===================== css/style.css =====================
+/* =========================================================
+   Instituto Raízes do Bairro - Design System v2 (redesign)
+   1. Tokens   2. Base   3. Layout   4. Componentes
+   5. Páginas  6. Utilitários/acessibilidade  7. Modo escuro
+   ========================================================= */
+
+/* 1. TOKENS ------------------------------------------------ */
+:root {
+  /* Primária: verde folha */
+  --cor-primaria-900: #173f2c;
+  --cor-primaria-700: #24603f;
+  --cor-primaria-500: #3c8a5c;
+  --cor-primaria-100: #e3ede4;
+  /* Secundária: terracota */
+  --cor-secundaria-700: #a04a1f;
+  --cor-secundaria-500: #b5562a;
+  --cor-secundaria-100: #f7e3d6;
+  /* Acento: mostarda */
+  --cor-acento: #e6a92b;
+  --cor-acento-escuro: #8a5f00;
+  /* Neutros: papel */
+  --cor-neutra-900: #1a1f1c;
+  --cor-neutra-600: #545c57;
+  --cor-neutra-300: #d9d3c6;
+  --cor-neutra-100: #f6f1e8;
+  --cor-branco: #fffdf9;
+  /* Estados */
+  --cor-sucesso: #24603f;
+  --cor-erro: #b3261e;
+  --cor-aviso: #7a5f00;
+  --cor-foco: #e6a92b;
+  --cor-erro-fundo: #fff3f1;
+  --cor-aviso-fundo: #fff3d6;
+  --cor-botao-sec: #24603f;
+  --cor-botao-sec-hover: #173f2c;
+  --cor-rodape: #173f2c;
+  --cor-rodape-texto: #e8efe9;
+  --cor-rodape-suave: #b7c9bc;
+  --cor-toast: #1a1f1c;
+  --cor-toast-texto: #fffdf9;
+  --cor-badge: #ece6da;
+  --cor-badge-texto: #1a1f1c;
+  --cor-faixa: #173f2c;
+  --cor-faixa-texto: #f6f1e8;
+
+  /* Tipografia */
+  --fonte-titulo: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --fonte-base: "Instrument Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-xs: 0.875rem;
+  --fs-sm: 1rem;
+  --fs-md: 1.25rem;
+  --fs-lg: 1.563rem;
+  --fs-xl: 2rem;
+  --fs-2xl: clamp(2.4rem, 2rem + 2.5vw, 4rem);
+  --fs-3xl: clamp(3rem, 2.2rem + 4vw, 5.5rem);
+  --lh-apertado: 1.05;
+  --lh-normal: 1.6;
+
+  /* Espaçamento base 4px */
+  --sp-1: 0.25rem; --sp-2: 0.5rem; --sp-3: 0.75rem; --sp-4: 1rem;
+  --sp-6: 1.5rem; --sp-8: 2rem; --sp-12: 3rem; --sp-16: 4rem; --sp-24: 6rem;
+
+  --raio-sm: 8px; --raio-md: 16px; --raio-lg: 28px; --raio-pill: 999px;
+  --sombra-1: 0 1px 2px rgba(26, 31, 28, 0.06), 0 2px 8px rgba(26, 31, 28, 0.06);
+  --sombra-2: 0 18px 40px -12px rgba(26, 31, 28, 0.25);
+  --largura-max: 1200px;
+  --transicao: 180ms cubic-bezier(.2,.7,.2,1);
+  --sp-pagina: var(--sp-4);
+  color-scheme: light;
+}
+
+/* 2. BASE -------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--fonte-base);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--cor-neutra-900);
+  background: var(--cor-neutra-100);
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--cor-primaria-700); text-underline-offset: 3px; }
+h1, h2, h3, h4 { font-family: var(--fonte-titulo); line-height: var(--lh-apertado); color: var(--cor-primaria-900); margin: 0 0 var(--sp-4); letter-spacing: -0.02em; font-weight: 700; }
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); }
+h3 { font-size: var(--fs-lg); }
+h4 { font-size: var(--fs-md); color: var(--cor-neutra-600); }
+p { margin: 0 0 var(--sp-4); }
+.lead { font-size: var(--fs-md); color: var(--cor-neutra-600); max-width: 60ch; line-height: 1.5; }
+.eyebrow { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--cor-secundaria-700); margin-bottom: var(--sp-4); }
+.eyebrow::before { content: ""; width: 28px; height: 3px; background: var(--cor-acento); border-radius: 2px; }
+.destaque { color: var(--cor-secundaria-500); font-style: italic; font-weight: 500; }
+:focus-visible { outline: 3px solid var(--cor-neutra-900); outline-offset: 2px; box-shadow: 0 0 0 2px var(--cor-branco); }
+h1[tabindex="-1"]:focus, h1[tabindex="-1"]:focus-visible { outline: none; box-shadow: none; } /* foco programático após troca de rota: não é interativo */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+/* 3. LAYOUT ------------------------------------------------ */
+.container { width: min(100% - 2 * var(--sp-pagina), var(--largura-max)); margin-inline: auto; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--sp-6); }
+.col-12, .col-8, .col-6, .col-4, .col-3 { grid-column: span 12; }
+@media (min-width: 360px) { :root { --sp-pagina: var(--sp-4); } }
+@media (min-width: 600px) {
+  :root { --sp-pagina: var(--sp-6); }
+  .col-6 { grid-column: span 6; } .col-4 { grid-column: span 6; } .col-3 { grid-column: span 6; }
+}
+@media (min-width: 900px) {
+  :root { --sp-pagina: var(--sp-8); }
+  .col-8 { grid-column: span 8; } .col-4 { grid-column: span 4; } .col-3 { grid-column: span 3; }
+}
+@media (min-width: 1200px) { .grid { gap: var(--sp-8); } }
+@media (min-width: 1440px) { :root { --largura-max: 1320px; } }
+
+main { padding-block: 0 var(--sp-24); overflow-x: clip; }
+.secao { padding-block: var(--sp-16); }
+.secao-cabecalho { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--sp-4); margin-bottom: var(--sp-8); }
+.secao-cabecalho h2 { margin: 0; max-width: 20ch; }
+.grid > *, .hero > *, .cards > * { min-width: 0; }
+
+/* 4. COMPONENTES ------------------------------------------- */
+
+/* 4.1 Header */
+.topo { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--cor-neutra-100) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--cor-neutra-300); }
+.topo .container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-3); min-height: 76px; }
+.menu { flex-basis: 100%; }
+.marca { margin: 0; font-family: var(--fonte-titulo); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.01em; }
+.marca a { display: inline-flex; align-items: center; gap: var(--sp-3); color: var(--cor-primaria-900); text-decoration: none; }
+.marca img { width: 44px; height: 44px; border-radius: 12px; }
+.marca small { display: block; font: 500 0.7rem/1.1 var(--fonte-base); letter-spacing: .12em; text-transform: uppercase; color: var(--cor-neutra-600); }
+
+.menu-toggle, .tema-toggle {
+  display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 44px;
+  background: transparent; border: 1.5px solid var(--cor-neutra-300); color: var(--cor-neutra-900);
+  border-radius: var(--raio-pill); padding: var(--sp-2) var(--sp-4); font: inherit; font-weight: 600; cursor: pointer;
+  transition: border-color var(--transicao), background var(--transicao);
+}
+.menu-toggle:hover, .tema-toggle:hover { border-color: var(--cor-primaria-700); background: var(--cor-primaria-100); }
+.tema-toggle { white-space: nowrap; }
+@media (max-width: 599px) { .tema-toggle .tema-texto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } .tema-toggle { padding-inline: var(--sp-3); } }
+.tema-toggle .icone-sol { display: none; }
+.menu-toggle .barras { display: inline-block; width: 20px; height: 2px; background: currentColor; position: relative; }
+.menu-toggle .barras::before, .menu-toggle .barras::after { content: ""; position: absolute; left: 0; width: 20px; height: 2px; background: currentColor; }
+.menu-toggle .barras::before { top: -6px; } .menu-toggle .barras::after { top: 6px; }
+
+.menu { display: none; }
+.menu.aberto { display: block; }
+.menu ul { list-style: none; margin: 0; padding: var(--sp-2) 0 var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-1); }
+.menu a { display: block; padding: var(--sp-3) var(--sp-4); color: var(--cor-primaria-900); text-decoration: none; font-weight: 600; border-radius: var(--raio-sm); transition: background var(--transicao); }
+.menu a:hover, .menu a:focus-visible { background: var(--cor-primaria-100); }
+.menu a[aria-current="page"] { background: var(--cor-primaria-100); box-shadow: inset 4px 0 0 var(--cor-secundaria-500); }
+.menu .cta-menu { display: none; }
+.acoes-topo { display: flex; gap: var(--sp-2); align-items: center; }
+
+.tem-submenu { position: relative; }
+.tem-submenu > button { display: flex; align-items: center; gap: var(--sp-2); width: 100%; background: none; border: 0; font: inherit; font-weight: 600; cursor: pointer; color: var(--cor-primaria-900); padding: var(--sp-3) var(--sp-4); border-radius: var(--raio-sm); }
+.tem-submenu > button::after { content: ""; width: .45em; height: .45em; border: solid currentColor; border-width: 0 2px 2px 0; transform: rotate(45deg) translateY(-2px); transition: transform var(--transicao); }
+.tem-submenu > button[aria-expanded="true"]::after { transform: rotate(-135deg) translateY(-2px); }
+.menu .submenu { list-style: none; margin: 0; padding: 0 0 0 var(--sp-6); display: none; flex-direction: column; gap: 0; }
+.menu .tem-submenu > button[aria-expanded="true"] + .submenu { display: flex; }
+.submenu a { font-weight: 500; font-size: var(--fs-xs); }
+
+@media (min-width: 900px) {
+  .menu-toggle { display: none; }
+  .menu { display: block !important; flex-basis: auto; }
+  .menu ul { flex-direction: row; align-items: center; gap: var(--sp-1); padding: 0; }
+  .menu a, .tem-submenu > button { padding: var(--sp-2) var(--sp-3); border-radius: var(--raio-pill); }
+  .menu a[aria-current="page"] { box-shadow: none; background: var(--cor-primaria-100); }
+  .menu .cta-menu { display: block; margin-left: var(--sp-2); }
+  .menu .cta-menu a, .menu .cta-menu a[aria-current="page"] { background: var(--cor-secundaria-500); color: #fff; padding: var(--sp-2) var(--sp-4); }
+  .menu .cta-menu a:hover, .menu .cta-menu a:focus-visible { background: var(--cor-secundaria-700); }
+  .menu .submenu { display: flex; position: absolute; top: calc(100% + 6px); left: 0; min-width: 240px; padding: var(--sp-2); background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); box-shadow: var(--sombra-2); opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity var(--transicao), transform var(--transicao), visibility 0s linear var(--transicao); }
+  .tem-submenu:hover > .submenu, .tem-submenu:focus-within > .submenu, .tem-submenu > button[aria-expanded="true"] + .submenu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .submenu a { padding: var(--sp-2) var(--sp-3); border-radius: var(--raio-sm); }
+}
+
+/* 4.2 Botões */
+.botao { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2); min-height: 48px; padding: var(--sp-3) var(--sp-6); background: var(--cor-secundaria-500); color: #ffffff; border: 2px solid transparent; border-radius: var(--raio-pill); font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; transition: background var(--transicao), transform var(--transicao), box-shadow var(--transicao); }
+.botao::after { content: "→"; font-weight: 500; transition: transform var(--transicao); }
+.botao.sem-seta::after, .botao[type="submit"]::after, .botao[type="button"]::after { content: none; }
+.botao:hover, .botao:focus-visible { background: var(--cor-secundaria-700); box-shadow: var(--sombra-2); transform: translateY(-1px); }
+.botao:hover::after { transform: translateX(3px); }
+.botao:focus-visible { outline: 3px solid var(--cor-neutra-900); outline-offset: 3px; }
+.botao:active { transform: translateY(0); box-shadow: none; }
+.botao:disabled, .botao[aria-disabled="true"] { background: var(--cor-neutra-300); color: var(--cor-neutra-600); cursor: not-allowed; box-shadow: none; transform: none; }
+.botao.carregando { position: relative; color: transparent; pointer-events: none; }
+.botao.carregando::after { content: ""; position: absolute; width: 18px; height: 18px; border: 3px solid #fff; border-right-color: transparent; border-radius: 50%; animation: girar .8s linear infinite; }
+@keyframes girar { to { transform: rotate(360deg); } }
+.botao-secundario { background: var(--cor-botao-sec); }
+.botao-secundario:hover, .botao-secundario:focus-visible { background: var(--cor-botao-sec-hover); }
+.botao-contorno { background: transparent; color: var(--cor-primaria-900); border-color: var(--cor-primaria-900); }
+.botao-contorno:hover, .botao-contorno:focus-visible { background: var(--cor-primaria-900); color: #fff; }
+.botao-claro { background: var(--cor-branco); color: var(--cor-primaria-900); }
+.botao-claro:hover, .botao-claro:focus-visible { background: var(--cor-acento); color: var(--cor-neutra-900); }
+.acoes { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-block: var(--sp-6); }
+.link-seta { font-weight: 600; text-decoration: none; }
+.link-seta::after { content: " →"; }
+.link-seta:hover { text-decoration: underline; }
+
+/* 4.3 Hero */
+.hero { position: relative; display: grid; gap: var(--sp-8); align-items: center; padding-block: var(--sp-12) var(--sp-16); isolation: isolate; }
+.hero::before { content: ""; position: absolute; right: -8vw; bottom: -8%; width: min(48vw, 560px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 40% 40%, color-mix(in srgb, var(--cor-acento) 22%, transparent), transparent 62%); z-index: -1; pointer-events: none; }
+.hero h1 { font-size: var(--fs-3xl); max-width: 12ch; margin-bottom: var(--sp-6); }
+.hero .lead { font-size: 1.2rem; max-width: 48ch; }
+.hero figure { margin: 0; position: relative; }
+.hero img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--raio-lg) var(--raio-lg) 120px var(--raio-lg); box-shadow: var(--sombra-2); }
+.hero figcaption { position: absolute; left: var(--sp-4); bottom: var(--sp-4); background: color-mix(in srgb, var(--cor-neutra-900) 78%, transparent); color: #fff; padding: var(--sp-2) var(--sp-3); border-radius: var(--raio-sm); font-size: var(--fs-xs); backdrop-filter: blur(6px); }
+.hero .selo { position: absolute; top: -18px; right: -6px; background: var(--cor-acento); color: var(--cor-neutra-900); font-family: var(--fonte-titulo); font-weight: 800; line-height: 1; padding: var(--sp-4); border-radius: 50%; width: 112px; height: 112px; display: grid; place-items: center; text-align: center; font-size: 0.8rem; transform: rotate(8deg); box-shadow: var(--sombra-1); }
+.hero .selo strong { display: block; font-size: 1.9rem; letter-spacing: -0.03em; }
+.confianca { display: flex; flex-wrap: wrap; gap: var(--sp-4) var(--sp-8); margin-top: var(--sp-6); color: var(--cor-neutra-600); font-size: var(--fs-xs); }
+.confianca span { display: inline-flex; align-items: center; gap: var(--sp-2); }
+.confianca span::before { content: "✓"; color: var(--cor-primaria-700); font-weight: 700; }
+@media (min-width: 900px) {
+  .hero { grid-template-columns: 6fr 6fr; padding-block: var(--sp-16) var(--sp-24); }
+  .hero > :not(figure) { grid-column: 1; }
+  .hero figure { grid-column: 2; grid-row: 1 / span 5; }
+}
+
+/* 4.4 Faixa de números */
+.faixa { background: var(--cor-faixa); color: var(--cor-faixa-texto); border-radius: var(--raio-lg); padding: var(--sp-8) var(--sp-6); position: relative; overflow: hidden; }
+.faixa::after { content: ""; position: absolute; right: -80px; top: -80px; width: 260px; height: 260px; border-radius: 50%; border: 40px solid color-mix(in srgb, var(--cor-acento) 22%, transparent); pointer-events: none; }
+.faixa h2 { color: inherit; font-size: var(--fs-lg); margin-bottom: var(--sp-6); max-width: 24ch; }
+.numeros { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--sp-6); margin: 0; }
+.numeros div { border-left: 2px solid color-mix(in srgb, var(--cor-faixa-texto) 30%, transparent); padding-left: var(--sp-4); }
+.numeros dt { font-size: var(--fs-xs); opacity: .85; order: 2; }
+.numeros dd { margin: 0; font-family: var(--fonte-titulo); font-size: clamp(2.2rem, 1.6rem + 2vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; color: var(--cor-acento); }
+.numeros div { display: flex; flex-direction: column; gap: var(--sp-2); }
+
+/* 4.5 Cards de projeto */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-6); }
+.card { display: flex; flex-direction: column; background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); overflow: hidden; box-shadow: var(--sombra-1); transition: transform var(--transicao), box-shadow var(--transicao); }
+.card:hover { transform: translateY(-4px); box-shadow: var(--sombra-2); }
+.card picture, .card > img { display: block; }
+.card img { width: 100%; aspect-ratio: 8 / 5; object-fit: cover; }
+.card-corpo { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-6); flex: 1; }
+.card-corpo h3 { margin: 0; font-size: 1.35rem; }
+.link-card { color: inherit; text-decoration: none; }
+.link-card:hover { color: var(--cor-secundaria-700); }
+.card-corpo p { margin: 0; color: var(--cor-neutra-600); }
+.card-corpo > :last-child { margin-top: auto; padding-top: var(--sp-2); }
+.card .etiquetas { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+/* 4.6 Badges, alertas, toast */
+.badge { display: inline-flex; align-items: center; gap: var(--sp-1); padding: 3px var(--sp-3); border-radius: var(--raio-pill); font-size: 0.78rem; font-weight: 700; letter-spacing: .02em; background: var(--cor-badge); color: var(--cor-badge-texto); }
+.badge::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.badge-ativo { background: var(--cor-primaria-100); color: var(--cor-primaria-900); }
+.badge-vagas { background: var(--cor-secundaria-100); color: var(--cor-secundaria-700); }
+.badge-aviso { background: var(--cor-aviso-fundo); color: var(--cor-aviso); }
+.badge-encerrado { background: var(--cor-badge); color: var(--cor-neutra-600); }
+.alerta { display: flex; gap: var(--sp-3); align-items: flex-start; padding: var(--sp-4) var(--sp-6); border-radius: var(--raio-md); border: 1px solid; border-left-width: 6px; margin-block: var(--sp-4); background: var(--cor-branco); }
+.alerta strong { display: block; margin-bottom: var(--sp-1); } .alerta p { margin: 0; }
+.alerta-sucesso { border-color: var(--cor-sucesso); background: var(--cor-primaria-100); color: var(--cor-primaria-900); }
+.alerta-erro { border-color: var(--cor-erro); background: var(--cor-erro-fundo); color: var(--cor-erro); }
+.alerta-aviso { border-color: var(--cor-aviso); background: var(--cor-aviso-fundo); color: var(--cor-aviso); }
+.alerta-info { border-color: var(--cor-primaria-500); }
+.toast { position: fixed; left: 50%; bottom: var(--sp-6); transform: translate(-50%, 20px); display: flex; align-items: center; gap: var(--sp-3); background: var(--cor-toast); color: var(--cor-toast-texto); padding: var(--sp-3) var(--sp-6); border-radius: var(--raio-pill); box-shadow: var(--sombra-2); opacity: 0; visibility: hidden; z-index: 50; max-width: calc(100% - 2rem); transition: opacity var(--transicao), transform var(--transicao), visibility 0s linear var(--transicao); }
+.toast.visivel { opacity: 1; visibility: visible; transform: translate(-50%, 0); transition-delay: 0s; }
+.toast::before { content: "✓"; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--cor-primaria-500); color: #fff; font-size: 12px; flex: none; }
+.toast-erro::before { content: "!"; background: var(--cor-erro); }
+
+/* 4.7 Como ajudar */
+.ajudar { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--sp-6); }
+.ajudar article { padding: var(--sp-6); border-radius: var(--raio-md); background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); }
+.ajudar .icone { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: var(--cor-primaria-100); color: var(--cor-primaria-900); margin-bottom: var(--sp-4); }
+.ajudar .icone svg { width: 26px; height: 26px; }
+.ajudar h3 { font-size: 1.25rem; margin-bottom: var(--sp-2); }
+.ajudar p { color: var(--cor-neutra-600); }
+
+/* 4.8 Depoimento */
+.depoimento { display: grid; gap: var(--sp-8); align-items: center; }
+.depoimento img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 120px var(--raio-lg) var(--raio-lg) var(--raio-lg); }
+.depoimento blockquote { margin: 0; }
+.depoimento blockquote p { font-family: var(--fonte-titulo); font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2.2rem); font-weight: 500; line-height: 1.25; letter-spacing: -0.01em; color: var(--cor-primaria-900); }
+.depoimento blockquote p::before { content: "“"; color: var(--cor-acento); font-size: 1.4em; line-height: 0; margin-right: 2px; }
+.depoimento footer { display: flex; align-items: center; gap: var(--sp-3); color: var(--cor-neutra-600); }
+.depoimento footer::before { content: ""; width: 36px; height: 2px; background: var(--cor-secundaria-500); }
+@media (min-width: 900px) { .depoimento { grid-template-columns: 5fr 7fr; } }
+
+/* 4.9 Chamada final */
+.chamada { display: grid; gap: var(--sp-8); align-items: center; background: var(--cor-secundaria-500); color: #fff; border-radius: var(--raio-lg); padding: var(--sp-8); overflow: hidden; position: relative; }
+.chamada h2 { color: inherit; font-size: var(--fs-2xl); max-width: 14ch; margin-bottom: var(--sp-3); }
+.chamada p { max-width: 44ch; color: #fff; }
+.chamada img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: var(--raio-md); }
+@media (min-width: 900px) { .chamada { grid-template-columns: 7fr 4fr; padding: var(--sp-12); } }
+
+/* 4.10 Rodapé */
+.rodape { background: var(--cor-rodape); color: var(--cor-rodape-texto); padding-block: var(--sp-16) var(--sp-8); margin-top: var(--sp-8); }
+.rodape .colunas { display: grid; gap: var(--sp-8); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom: var(--sp-12); }
+.rodape h2 { color: inherit; font-size: 1rem; letter-spacing: .08em; text-transform: uppercase; font-family: var(--fonte-base); font-weight: 700; margin-bottom: var(--sp-4); opacity: .8; }
+.rodape a { color: var(--cor-rodape-texto); }
+.rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-2); }
+.rodape p { margin: 0 0 var(--sp-3); }
+.rodape .marca-rodape { font-family: var(--fonte-titulo); font-size: 1.4rem; font-weight: 700; margin-bottom: var(--sp-3); }
+.rodape small, .rodape .suave { color: var(--cor-rodape-suave); }
+.rodape .base { border-top: 1px solid color-mix(in srgb, var(--cor-rodape-texto) 20%, transparent); padding-top: var(--sp-6); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--sp-3); font-size: var(--fs-xs); }
+.rodape address { font-style: normal; }
+
+/* 4.11 Formulário */
+form { max-width: 760px; }
+fieldset { border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); padding: var(--sp-6); margin: 0 0 var(--sp-6); background: var(--cor-branco); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--sp-4); }
+legend { font-family: var(--fonte-titulo); font-weight: 700; color: var(--cor-primaria-900); padding: 0 var(--sp-2); font-size: var(--fs-md); }
+.campo { grid-column: span 12; } .campo-curto { grid-column: span 12; }
+@media (min-width: 600px) { .campo-meio { grid-column: span 6; } .campo-curto { grid-column: span 4; } }
+label { display: block; font-weight: 600; margin-bottom: var(--sp-1); }
+input, select, textarea { width: 100%; font: inherit; min-height: 46px; padding: var(--sp-2) var(--sp-3); border: 1.5px solid var(--cor-neutra-300); border-radius: var(--raio-sm); background: var(--cor-branco); color: var(--cor-neutra-900); transition: border-color var(--transicao), box-shadow var(--transicao); }
+input:hover, select:hover, textarea:hover { border-color: var(--cor-neutra-600); }
+input:focus, select:focus, textarea:focus { outline: 3px solid var(--cor-neutra-900); outline-offset: 1px; border-color: var(--cor-primaria-700); box-shadow: none; }
+input:user-invalid, select:user-invalid, textarea:user-invalid, [aria-invalid="true"] { border-color: var(--cor-erro); background: var(--cor-erro-fundo); }
+input:user-valid:not([type=checkbox]):not([type=radio]) { border-color: var(--cor-sucesso); }
+input:disabled, select:disabled { background: var(--cor-neutra-100); color: var(--cor-neutra-600); cursor: not-allowed; }
+small { display: block; color: var(--cor-neutra-600); font-size: var(--fs-xs); margin-top: var(--sp-1); }
+.campo-erro { color: var(--cor-erro); font-size: var(--fs-xs); font-weight: 600; margin-top: var(--sp-1); min-height: 1.2em; }
+.contador { font-size: var(--fs-xs); color: var(--cor-neutra-600); text-align: right; }
+.opcoes { grid-column: span 12; display: flex; align-items: center; gap: var(--sp-2); }
+.opcoes input { width: 20px; height: 20px; min-height: 0; accent-color: var(--cor-primaria-700); }
+.opcoes label { margin: 0; font-weight: 400; }
+.status { font-weight: 600; min-height: 1.5rem; padding: var(--sp-3) var(--sp-4); border-radius: var(--raio-sm); }
+.status.ok { background: var(--cor-primaria-100); color: var(--cor-primaria-900); border-left: 4px solid var(--cor-sucesso); }
+.status.falha { background: var(--cor-erro-fundo); color: var(--cor-erro); border-left: 4px solid var(--cor-erro); }
+.pagina-form { display: grid; gap: var(--sp-8); align-items: start; }
+.pagina-form aside { background: var(--cor-primaria-100); border-radius: var(--raio-md); padding: var(--sp-6); position: sticky; top: 96px; }
+.pagina-form aside h2 { font-size: 1.2rem; }
+.pagina-form aside ol { padding-left: var(--sp-4); margin: 0; display: grid; gap: var(--sp-2); }
+@media (min-width: 900px) { .pagina-form { grid-template-columns: 8fr 4fr; } }
+
+/* 4.12 Modal */
+.modal { border: 0; border-radius: var(--raio-md); padding: 0; max-width: min(92vw, 480px); box-shadow: var(--sombra-2); background: var(--cor-branco); color: var(--cor-neutra-900); }
+.modal::backdrop { background: rgba(26, 31, 28, 0.55); }
+.modal-corpo { padding: var(--sp-8); display: flex; flex-direction: column; gap: var(--sp-4); }
+.modal h2 { margin: 0; font-size: var(--fs-lg); }
+.modal .acoes { margin: 0; justify-content: flex-end; }
+
+/* 4.13 Tabela e listagem */
+.tabela { width: 100%; border-collapse: collapse; background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); overflow: hidden; }
+.tabela th, .tabela td { text-align: left; padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--cor-neutra-300); font-size: var(--fs-xs); }
+.tabela th { background: var(--cor-primaria-100); color: var(--cor-primaria-900); }
+.tabela tr:last-child td { border-bottom: 0; }
+.tabela-wrap { overflow-x: auto; border-radius: var(--raio-md); }
+.vazio { padding: var(--sp-8); text-align: center; color: var(--cor-neutra-600); background: var(--cor-branco); border: 1px dashed var(--cor-neutra-300); border-radius: var(--raio-md); }
+.filtros { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: end; margin-block: var(--sp-4) var(--sp-8); }
+.filtros label { margin: 0; }
+.filtros input, .filtros select { width: auto; min-width: 220px; }
+.grafico-wrap { position: relative; height: 260px; max-width: 640px; background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); padding: var(--sp-4); margin-block: var(--sp-4) var(--sp-8); }
+
+/* 5. PÁGINAS ----------------------------------------------- */
+.cabecalho-pagina { padding-block: var(--sp-12) var(--sp-8); max-width: 60ch; }
+.cabecalho-pagina h1 { margin-bottom: var(--sp-3); }
+.projeto-detalhe { display: grid; gap: var(--sp-8); }
+.projeto-detalhe img { width: 100%; aspect-ratio: 8 / 5; object-fit: cover; border-radius: var(--raio-lg); }
+.projeto-detalhe .ficha { background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); padding: var(--sp-6); display: grid; gap: var(--sp-4); align-self: start; position: sticky; top: 96px; }
+.projeto-detalhe .ficha dt { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--cor-neutra-600); }
+.projeto-detalhe .ficha dd { margin: 0 0 var(--sp-2); font-weight: 600; }
+.projeto-detalhe ul { padding-left: var(--sp-4); }
+.projeto-detalhe li { margin-bottom: var(--sp-2); }
+@media (min-width: 900px) { .projeto-detalhe { grid-template-columns: 8fr 4fr; } .projeto-detalhe .conteudo { grid-column: 1; } .projeto-detalhe .ficha { grid-column: 2; grid-row: 1 / span 2; } }
+.contato { display: grid; gap: var(--sp-8); }
+.contato .bloco { background: var(--cor-branco); border: 1px solid var(--cor-neutra-300); border-radius: var(--raio-md); padding: var(--sp-6); }
+.contato address { font-style: normal; display: grid; gap: var(--sp-2); }
+@media (min-width: 900px) { .contato { grid-template-columns: 1fr 1fr; } }
+
+/* 6. UTILITÁRIOS E ACESSIBILIDADE -------------------------- */
+.pular { position: absolute; left: -999px; top: 0; background: var(--cor-rodape); color: var(--cor-rodape-texto); padding: var(--sp-2) var(--sp-4); z-index: 100; border-radius: 0 0 var(--raio-sm) 0; }
+.pular:focus { left: var(--sp-4); }
+.visualmente-oculto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.view { animation: aparecer 260ms ease; min-height: 100vh; }
+@keyframes aparecer { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.carregando-view { padding: var(--sp-12) 0; text-align: center; color: var(--cor-neutra-600); }
+@media (prefers-contrast: more) { :root { --cor-neutra-600: #2f3733; --cor-neutra-300: #8a948d; } .card, fieldset { border-width: 2px; } }
+@media (forced-colors: active) { .botao, .badge { border: 2px solid ButtonText; } .menu a[aria-current="page"] { text-decoration: underline; } }
+
+/* 7. MODO ESCURO ------------------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    color-scheme: dark;
+    --cor-primaria-900: #b9e3c4; --cor-primaria-700: #78c894; --cor-primaria-500: #4fae74; --cor-primaria-100: #1f2f26;
+    --cor-secundaria-700: #f0a06e; --cor-secundaria-500: #b5562a; --cor-secundaria-100: #3a2418;
+    --cor-acento: #f2c94c; --cor-acento-escuro: #f2c94c;
+    --cor-neutra-900: #eef2ee; --cor-neutra-600: #b9c4bc; --cor-neutra-300: #7a877e; --cor-neutra-100: #131715; --cor-branco: #1c221e;
+    --cor-sucesso: #78c894; --cor-erro: #ff8a80; --cor-aviso: #f2c94c; --cor-foco: #ffd166;
+    --cor-erro-fundo: #2e1a18; --cor-aviso-fundo: #2e2710;
+    --cor-rodape: #0d1a12; --cor-rodape-texto: #d5e2d8; --cor-rodape-suave: #a9bcb0;
+    --cor-toast: #eef2ee; --cor-toast-texto: #131715; --cor-badge: #2b332e; --cor-badge-texto: #eef2ee;
+    --cor-faixa: #1f2f26; --cor-faixa-texto: #eef2ee;
+    --sombra-1: 0 1px 2px rgba(0,0,0,.5); --sombra-2: 0 18px 40px -12px rgba(0,0,0,.7);
+  }
+}
+:root[data-tema="escuro"] {
+  color-scheme: dark;
+  --cor-primaria-900: #b9e3c4; --cor-primaria-700: #78c894; --cor-primaria-500: #4fae74; --cor-primaria-100: #1f2f26;
+  --cor-secundaria-700: #f0a06e; --cor-secundaria-500: #b5562a; --cor-secundaria-100: #3a2418;
+  --cor-acento: #f2c94c; --cor-acento-escuro: #f2c94c;
+  --cor-neutra-900: #eef2ee; --cor-neutra-600: #b9c4bc; --cor-neutra-300: #7a877e; --cor-neutra-100: #131715; --cor-branco: #1c221e;
+  --cor-sucesso: #78c894; --cor-erro: #ff8a80; --cor-aviso: #f2c94c; --cor-foco: #ffd166;
+  --cor-erro-fundo: #2e1a18; --cor-aviso-fundo: #2e2710;
+  --cor-rodape: #0d1a12; --cor-rodape-texto: #d5e2d8; --cor-rodape-suave: #a9bcb0;
+  --cor-toast: #eef2ee; --cor-toast-texto: #131715; --cor-badge: #2b332e; --cor-badge-texto: #eef2ee;
+  --cor-faixa: #1f2f26; --cor-faixa-texto: #eef2ee;
+  --sombra-1: 0 1px 2px rgba(0,0,0,.5); --sombra-2: 0 18px 40px -12px rgba(0,0,0,.7);
+}
+:root[data-tema="escuro"] .hero::before { opacity: .45; }
+:root[data-tema="escuro"] .tema-toggle .icone-sol { display: inline; }
+:root[data-tema="escuro"] .tema-toggle .icone-lua { display: none; }
+
+
+===================== js/main.js =====================
+// main.js - ponto de entrada: registra rotas e liga os módulos
+import { registrar, iniciar } from './modules/router.js';
+import * as T from './modules/templates.js';
+import { projetos } from './data/projetos.js';
+import { store } from './modules/store.js';
+import { iniciarMenu, marcarRotaAtiva, iniciarTema } from './modules/ui.js';
+import { renderCadastro } from './modules/cadastro.js';
+import { renderVoluntarios } from './modules/voluntarios.js';
+
+const app = document.getElementById('app');
+
+// Troca a view com uma pequena animação e devolve o foco ao topo do conteúdo
+function render(html) {
+  app.classList.remove('view'); void app.offsetWidth; app.classList.add('view');
+  app.innerHTML = html;
+  window.scrollTo({ top: 0 });
+  const h1 = document.querySelector('h1');
+  h1?.setAttribute('tabindex', '-1');
+  h1?.focus({ preventScroll: true });
+  // leitores de tela anunciam a troca de view (telas interativas injetam o h1 logo depois, por isso o setTimeout)
+  setTimeout(() => {
+    const titulo = document.querySelector('h1')?.textContent;
+    const anuncio = document.getElementById('anuncio-rota');
+    if (anuncio && titulo) anuncio.textContent = `Página carregada: ${titulo}`;
+  }, 0);
+}
+
+registrar('/', () => { document.title = 'Instituto Raízes do Bairro'; render(T.home({ totalVoluntarios: store.listar().length })); });
+registrar('/projetos', () => { document.title = 'Projetos | Raízes do Bairro'; render(T.listaProjetos()); });
+registrar('/projetos/:slug', ({ slug }) => { const p = projetos.find((x) => x.slug === slug); document.title = (p?.nome || 'Projeto') + ' | Raízes do Bairro'; render(T.detalheProjeto(p)); });
+registrar('/cadastro', (params) => { document.title = 'Seja voluntário | Raízes do Bairro'; render(''); renderCadastro(app, params); });
+registrar('/voluntarios', (params) => { document.title = 'Voluntários | Raízes do Bairro'; render(''); renderVoluntarios(app, params); });
+registrar('/contato', () => { document.title = 'Contato | Raízes do Bairro'; render(T.contato()); });
+registrar('*', () => { document.title = 'Página não encontrada'; render(T.naoEncontrado()); });
+
+iniciarMenu();
+iniciarTema();
+iniciar(({ caminho }) => marcarRotaAtiva(caminho));
+
+
+===================== js/data/projetos.js =====================
+// Dados dos projetos: fonte única usada pelos templates da SPA
+export const projetos = [
+  {
+    slug: 'aprender-junto',
+    nome: 'Aprender Junto',
+    categoria: 'Educação',
+    status: 'ativo',
+    vagas: 6,
+    resumo: 'Reforço escolar e roda de leitura no contraturno para crianças do 2º ao 5º ano.',
+    publico: '60 crianças de 7 a 11 anos, moradoras do Jardim Oriente e bairros vizinhos.',
+    resultados: ['92% das crianças avançaram um nível de leitura em 2025', '38 famílias acompanhadas pela equipe pedagógica', '4 voluntários formados em alfabetização'],
+    horarios: 'Segunda a quinta, 13h30 às 17h',
+    imagem: 'img/projeto-aprender.jpg',
+    alt: 'Crianças deitadas no tapete folheando um livro ilustrado'
+  },
+  {
+    slug: 'cozinha-escola',
+    nome: 'Cozinha-Escola',
+    categoria: 'Renda',
+    status: 'ativo',
+    vagas: 4,
+    resumo: 'Formação em gastronomia e empreendedorismo para mães e jovens do bairro.',
+    publico: 'Mulheres e jovens de 16 a 29 anos em busca de renda.',
+    resultados: ['3 turmas concluídas, 41 pessoas formadas', '12 participantes hoje vendem marmitas e doces', '1.800 refeições doadas às famílias atendidas'],
+    horarios: 'Terça e quinta, 14h às 17h',
+    imagem: 'img/projeto-cozinha.jpg',
+    alt: 'Grupo de adultos cozinhando juntos em uma cozinha industrial, com legumes na frigideira'
+  },
+  {
+    slug: 'horta-comunitaria',
+    nome: 'Horta Comunitária',
+    categoria: 'Alimentação',
+    status: 'encerrado',
+    vagas: 0,
+    resumo: 'Produção de hortaliças que abastece a cozinha e as cestas das famílias.',
+    publico: 'Famílias atendidas e voluntários de todas as idades.',
+    resultados: ['1,2 tonelada de hortaliças colhidas em 2025', '140 cestas mensais complementadas com verduras', 'Turma 2025 encerrada; nova turma em março de 2027'],
+    horarios: 'Sábados, 8h às 11h',
+    imagem: 'img/projeto-horta.jpg',
+    alt: 'Vista de cima de canteiros de madeira em uma horta comunitária, com duas pessoas cuidando das plantas'
+  }
+];
+
+export const areasAtuacao = ['Educação', 'Cozinha', 'Horta', 'Comunicação', 'Administrativo', 'Transporte'];
+
+
+===================== js/modules/router.js =====================
+// router.js - roteador hash-based (#/rota/:param?query) para a SPA
+const rotas = [];
+let aoNavegar = null;
+
+let fallback = null;
+
+export function registrar(padrao, handler) {
+  if (padrao === '*') { fallback = handler; return; } // rota "não encontrada": não vira regex ('^*$' seria inválida)
+  // converte "/projetos/:slug" em regex com grupos nomeados
+  const chaves = [];
+  const regex = new RegExp('^' + padrao.replace(/:(\w+)/g, (_, k) => { chaves.push(k); return '([^/]+)'; }) + '$');
+  rotas.push({ regex, chaves, handler });
+}
+
+export function navegar(caminho) {
+  location.hash = '#' + caminho; // dispara hashchange
+}
+
+export function rotaAtual() {
+  const bruto = location.hash.replace(/^#/, '') || '/';
+  const [caminho, query = ''] = bruto.split('?');
+  return { caminho, params: Object.fromEntries(new URLSearchParams(query)) };
+}
+
+function resolver() {
+  const { caminho, params } = rotaAtual();
+  for (const r of rotas) {
+    const m = caminho.match(r.regex);
+    if (m) {
+      const p = {};
+      r.chaves.forEach((k, i) => { p[k] = decodeURIComponent(m[i + 1]); });
+      aoNavegar?.({ caminho, params: { ...params, ...p } });
+      return r.handler({ ...params, ...p });
+    }
+  }
+  aoNavegar?.({ caminho, params });
+  return fallback?.(params);
+}
+
+export function iniciar(callback) {
+  aoNavegar = callback;
+  window.addEventListener('hashchange', resolver);
+  resolver();
+}
+
+
+===================== js/modules/templates.js =====================
+// templates.js - funções puras que recebem dados e devolvem HTML (template literals)
+import { projetos, areasAtuacao } from '../data/projetos.js';
+
+// Evita XSS: tudo que vem do usuário (localStorage) passa por aqui antes de ir para o DOM
+export function escapar(valor) {
+  return String(valor ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+export function badge(projeto) {
+  if (projeto.status === 'encerrado') return '<span class="badge badge-encerrado">Encerrado</span>';
+  if (projeto.vagas > 0) return `<span class="badge badge-vagas">${projeto.vagas} vagas</span>`;
+  return '<span class="badge badge-ativo">Ativo</span>';
+}
+
+// Componente reutilizável: card de projeto (usado na home e na lista de projetos)
+function foto(p, { lazy = true } = {}) {
+  return `<picture>
+          <source type="image/webp" srcset="${p.imagem.replace('.jpg', '-400.webp')} 400w, ${p.imagem.replace('.jpg', '-800.webp')} 800w" sizes="(min-width: 900px) 30vw, 100vw">
+          <img src="${p.imagem}" alt="${p.alt}" width="800" height="500" ${lazy ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async">
+        </picture>`;
+}
+
+export function cardProjeto(p) {
+  return `
+    <article class="card" id="${p.slug}">
+      <a href="#/projetos/${p.slug}" tabindex="-1" aria-hidden="true">${foto(p)}</a>
+      <div class="card-corpo">
+        <p class="etiquetas">${badge(p)} <span class="badge">${p.categoria}</span></p>
+        <h3><a href="#/projetos/${p.slug}" class="link-card">${p.nome}</a></h3>
+        <p>${p.resumo}</p>
+        <a class="link-seta" href="#/projetos/${p.slug}">Conhecer o projeto</a>
+      </div>
+    </article>`;
+}
+
+export function home({ totalVoluntarios }) {
+  const icones = {
+    tempo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    doacao: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>',
+    empresa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg>'
+  };
+  return `
+    <section class="hero" aria-labelledby="titulo-principal">
+      <p class="eyebrow">ONG · Jardim Oriente, Piracicaba</p>
+      <h1 id="titulo-principal">Criança que lê, come bem e sonha <span class="destaque">muda o bairro</span>.</h1>
+      <p class="lead">Desde 2014, moradores do Jardim Oriente mantêm reforço escolar, cozinha-escola e horta comunitária para 320 crianças e 140 famílias por ano.</p>
+      <p class="acoes">
+        <a class="botao" href="#/cadastro">Quero ser voluntário</a>
+        <a class="botao botao-contorno sem-seta" href="#/projetos">Conhecer os projetos</a>
+      </p>
+      <p class="confianca"><span>Sem fins lucrativos</span><span>Prestação de contas anual</span><span>${totalVoluntarios > 0 ? `${totalVoluntarios} voluntário${totalVoluntarios === 1 ? '' : 's'} cadastrado${totalVoluntarios === 1 ? '' : 's'}` : 'Feito por moradores do bairro'}</span></p>
+      <figure>
+        <picture>
+          <source type="image/webp" srcset="img/hero-criancas-480.webp 480w, img/hero-criancas-800.webp 800w, img/hero-criancas-1200.webp 1200w" sizes="(min-width: 900px) 50vw, 100vw">
+          <img src="img/hero-criancas.jpg" alt="Crianças em volta de uma mesa folheando livros ilustrados, com um educador ao lado" width="800" height="600" fetchpriority="high" decoding="async">
+        </picture>
+        <figcaption>Roda de leitura do Aprender Junto</figcaption>
+        <p class="selo" aria-hidden="true"><span><strong>12</strong>anos de bairro</span></p>
+      </figure>
+    </section>
+
+    <section class="secao" aria-labelledby="t-numeros">
+      <div class="faixa">
+        <h2 id="t-numeros">O que a comunidade construiu em 2025</h2>
+        <dl class="numeros">
+          <div><dd>320</dd><dt>crianças atendidas</dt></div>
+          <div><dd>140</dd><dt>famílias acompanhadas</dt></div>
+          <div><dd>18 mil</dd><dt>refeições servidas</dt></div>
+          <div><dd>1,2 t</dd><dt>de hortaliças colhidas</dt></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="t-projetos">
+      <div class="secao-cabecalho">
+        <div><p class="eyebrow">Projetos</p><h2 id="t-projetos">Três frentes, todas tocadas por gente do bairro</h2></div>
+        <a class="link-seta" href="#/projetos">Ver todos os projetos</a>
+      </div>
+      <div class="cards">${projetos.map(cardProjeto).join('')}</div>
+    </section>
+
+    <section class="secao" aria-labelledby="t-depoimento">
+      <div class="depoimento">
+        <picture>
+          <source type="image/webp" srcset="img/depoimento-400.webp 400w, img/depoimento-640.webp 640w" sizes="(min-width: 900px) 34vw, 100vw">
+          <img src="img/depoimento.jpg" alt="Dois meninos sentados na calçada lendo o mesmo livro, em frente a um muro grafitado" width="600" height="750" loading="lazy" decoding="async">
+        </picture>
+        <blockquote>
+          <h2 id="t-depoimento" class="visualmente-oculto">Depoimento</h2>
+          <p>Meu filho não gostava de escola. Hoje ele chega em casa e lê para a irmã. A gente não tinha isso, e agora tem, aqui na nossa rua.</p>
+          <footer>Rosângela, mãe do Kauã, 9 anos, do Aprender Junto</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="t-ajudar">
+      <div class="secao-cabecalho">
+        <div><p class="eyebrow">Como ajudar</p><h2 id="t-ajudar">Tem espaço para você</h2></div>
+      </div>
+      <div class="ajudar">
+        <article><div class="icone">${icones.tempo}</div><h3>Doe tempo</h3><p>Duas horas por semana já fazem diferença: leitura, cozinha, horta ou apoio administrativo.</p><a class="link-seta" href="#/cadastro">Cadastrar como voluntário</a></article>
+        <article><div class="icone">${icones.doacao}</div><h3>Doe alimentos ou recursos</h3><p>Cada cesta mensal custa R$ 180. Doações via Pix são publicadas no relatório de transparência.</p><a class="link-seta" href="#/contato">Falar com a coordenação</a></article>
+        <article><div class="icone">${icones.empresa}</div><h3>Seja empresa parceira</h3><p>Apadrinhe uma turma, ofereça vagas de estágio aos jovens da Cozinha-Escola ou patrocine a horta.</p><a class="link-seta" href="#/contato">Propor parceria</a></article>
+      </div>
+    </section>
+
+    <section class="secao" aria-labelledby="t-chamada">
+      <div class="chamada">
+        <div>
+          <h2 id="t-chamada">Duas horas por semana. Uma criança a mais lendo.</h2>
+          <p>Não precisa ser professor. Precisa aparecer. A coordenação acompanha cada voluntário nas primeiras semanas.</p>
+          <p class="acoes"><a class="botao botao-claro" href="#/cadastro">Quero ser voluntário</a></p>
+        </div>
+        <picture>
+          <source type="image/webp" srcset="img/voluntario-400.webp 400w, img/voluntario-640.webp 640w" sizes="(min-width: 900px) 28vw, 100vw">
+          <img src="img/voluntario.jpg" alt="Mão de um adulto apontando uma página de livro ilustrado para uma criança" width="600" height="800" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </section>`;
+}
+
+export function listaProjetos() {
+  return `
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Projetos</p>
+      <h1>Nossos projetos</h1>
+      <p class="lead">Três frentes permanentes no Jardim Oriente: educação, renda e alimentação. Todas nasceram de pedidos da própria comunidade.</p>
+    </header>
+    <div class="cards">${projetos.map(cardProjeto).join('')}</div>`;
+}
+
+export function detalheProjeto(p) {
+  if (!p) return naoEncontrado();
+  return `
+    <header class="cabecalho-pagina">
+      <p><a class="link-seta" href="#/projetos" style="display:inline-block;transform:scaleX(-1)"></a><a href="#/projetos">Todos os projetos</a></p>
+      <p class="etiquetas">${badge(p)} <span class="badge">${p.categoria}</span></p>
+      <h1>${p.nome}</h1>
+      <p class="lead">${p.resumo}</p>
+    </header>
+    <article class="projeto-detalhe">
+      <div class="conteudo">
+        ${foto(p, { lazy: false })}
+        <h2>Público atendido</h2><p>${p.publico}</p>
+        <h2>Resultados em 2025</h2>
+        <ul>${p.resultados.map((r) => `<li>${r}</li>`).join('')}</ul>
+      </div>
+      <aside class="ficha" aria-label="Como participar">
+        <dl>
+          <dt>Horários</dt><dd>${p.horarios}</dd>
+          <dt>Situação</dt><dd>${p.status === 'ativo' ? `${p.vagas} vaga${p.vagas === 1 ? '' : 's'} para voluntários` : 'Turma encerrada'}</dd>
+          <dt>Onde</dt><dd>Sede do instituto, Rua das Palmeiras, 380</dd>
+        </dl>
+        ${p.status === 'ativo' ? `<a class="botao" href="#/cadastro?projeto=${p.slug}">Quero ajudar neste projeto</a>` : '<span class="botao sem-seta" aria-disabled="true">Inscrições encerradas</span>'}
+      </aside>
+    </article>`;
+}
+
+export function cadastro({ dados = {}, projetoSugerido = '' }) {
+  const v = (k) => escapar(dados[k] ?? '');
+  const opcoesProjeto = projetos.filter((p) => p.status === 'ativo')
+    .map((p) => `<option value="${p.slug}" ${(dados.projeto || projetoSugerido) === p.slug ? 'selected' : ''}>${p.nome}</option>`).join('');
+  const areas = areasAtuacao.map((a) => `
+      <div class="opcoes"><input type="checkbox" id="area-${a}" name="areas" value="${a}" ${(dados.areas || []).includes(a) ? 'checked' : ''}><label for="area-${a}">${a}</label></div>`).join('');
+  return `
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Voluntariado</p>
+      <h1>Cadastro de voluntário</h1>
+      <p class="lead">Leva uns três minutos. Os campos com * são obrigatórios e o rascunho fica salvo neste navegador.</p>
+    </header>
+    <div class="pagina-form">
+    <form id="form-cadastro" novalidate>
+      <fieldset>
+        <legend>Dados pessoais</legend>
+        <div class="campo campo-meio"><label for="nome">Nome completo *</label><input id="nome" aria-describedby="erro-nome" name="nome" type="text" required minlength="5" maxlength="100" autocomplete="name" value="${v('nome')}"><p class="campo-erro" id="erro-nome"></p></div>
+        <div class="campo campo-meio"><label for="cpf">CPF *</label><input id="cpf" aria-describedby="erro-cpf" name="cpf" type="text" inputmode="numeric" required maxlength="14" placeholder="000.000.000-00" value="${v('cpf')}"><p class="campo-erro" id="erro-cpf"></p></div>
+        <div class="campo campo-meio"><label for="email">E-mail *</label><input id="email" aria-describedby="erro-email" name="email" type="email" required autocomplete="email" value="${v('email')}"><p class="campo-erro" id="erro-email"></p></div>
+        <div class="campo campo-meio"><label for="telefone">Telefone/WhatsApp *</label><input id="telefone" aria-describedby="erro-telefone" name="telefone" type="tel" inputmode="numeric" required maxlength="15" placeholder="(19) 99999-9999" autocomplete="tel" value="${v('telefone')}"><p class="campo-erro" id="erro-telefone"></p></div>
+        <div class="campo campo-curto"><label for="nascimento">Data de nascimento *</label><input id="nascimento" aria-describedby="erro-nascimento" name="nascimento" type="date" required value="${v('nascimento')}"><p class="campo-erro" id="erro-nascimento"></p></div>
+        <div class="campo campo-curto"><label for="cep">CEP *</label><input id="cep" aria-describedby="erro-cep" name="cep" type="text" inputmode="numeric" required maxlength="9" placeholder="13400-000" value="${v('cep')}"><p class="campo-erro" id="erro-cep"></p></div>
+      </fieldset>
+      <fieldset>
+        <legend>Como quer ajudar</legend>
+        <div class="campo campo-meio"><label for="projeto">Projeto de interesse *</label><select id="projeto" aria-describedby="erro-projeto" name="projeto" required><option value="">Selecione…</option>${opcoesProjeto}</select><p class="campo-erro" id="erro-projeto"></p></div>
+        <div class="campo campo-meio"><label for="horas">Horas por semana *</label><input id="horas" aria-describedby="erro-horas" name="horas" type="number" min="1" max="20" required value="${v('horas')}"><p class="campo-erro" id="erro-horas"></p></div>
+        <div class="campo"><p id="rotulo-areas"><strong>Áreas em que pode atuar (marque ao menos uma) *</strong></p><div role="group" aria-labelledby="rotulo-areas">${areas}</div><p class="campo-erro" id="erro-areas"></p></div>
+        <div class="campo"><label for="mensagem">Conte um pouco sobre você</label><textarea id="mensagem" name="mensagem" rows="4" maxlength="500" aria-describedby="contador-mensagem">${v('mensagem')}</textarea><p class="contador" id="contador-mensagem">0/500</p></div>
+      </fieldset>
+      <div class="opcoes"><input type="checkbox" id="lgpd" name="lgpd" required aria-describedby="erro-lgpd" ${dados.lgpd ? 'checked' : ''}><label for="lgpd">Autorizo o uso dos meus dados para contato sobre o voluntariado (LGPD). *</label></div>
+      <p class="campo-erro" id="erro-lgpd"></p>
+      <p class="acoes">
+        <button class="botao" type="submit" id="btn-enviar">Enviar cadastro</button>
+        <button class="botao botao-contorno" type="button" id="btn-limpar">Limpar</button>
+      </p>
+      <p id="mensagem-status" class="status" role="status" aria-live="polite"></p>
+    </form>
+    <aside aria-labelledby="t-proximos">
+      <h2 id="t-proximos">O que acontece depois</h2>
+      <ol>
+        <li>A coordenação lê seu cadastro e liga em até 3 dias úteis.</li>
+        <li>Você visita a sede e conhece o projeto escolhido.</li>
+        <li>Nas primeiras semanas, alguém da equipe acompanha você.</li>
+      </ol>
+      <p><small>Dúvidas? <a href="#/contato">Fale com a gente</a>.</small></p>
+    </aside>
+    </div>`;
+}
+
+export function voluntarios(lista, filtro = '') {
+  const linhas = lista.map((v) => `
+      <tr>
+        <td>${escapar(v.nome)}</td>
+        <td>${escapar(v.email)}</td>
+        <td>${escapar(v.telefone)}</td>
+        <td>${escapar(projetos.find((p) => p.slug === v.projeto)?.nome || v.projeto)}</td>
+        <td>${escapar((v.areas || []).join(', '))}</td>
+        <td>${escapar(v.horas)}h</td>
+        <td>${new Date(v.criadoEm).toLocaleDateString('pt-BR')}</td>
+        <td><button class="botao botao-contorno" type="button" data-remover="${escapar(v.id)}">Remover</button></td>
+      </tr>`).join('');
+  return `
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Coordenação</p>
+      <h1>Voluntários cadastrados</h1>
+      <p class="lead">Lista salva localmente no navegador (localStorage). ${lista.length} registro(s).</p>
+    </header>
+    <div class="filtros">
+      <div><label for="busca">Buscar por nome ou projeto</label><input id="busca" type="search" value="${escapar(filtro)}" placeholder="Ex.: Maria, cozinha"></div>
+      <button class="botao botao-contorno" type="button" id="btn-exportar">Exportar JSON</button>
+      <button class="botao botao-contorno" type="button" id="btn-limpar-tudo">Apagar todos</button>
+    </div>
+    ${lista.length ? `<section class="grafico" aria-labelledby="t-grafico"><h2 id="t-grafico">Voluntários por projeto</h2><div class="grafico-wrap"><canvas id="grafico-projetos" role="img" aria-label="Gráfico de barras com a quantidade de voluntários por projeto"></canvas></div></section><div class="tabela-wrap"><table class="tabela"><thead><tr><th>Nome</th><th>E-mail</th><th>Telefone</th><th>Projeto</th><th>Áreas</th><th>Horas</th><th>Cadastro</th><th></th></tr></thead><tbody>${linhas}</tbody></table></div>`
+                   : '<p class="vazio">Nenhum voluntário encontrado. <a href="#/cadastro">Faça o primeiro cadastro</a>.</p>'}`;
+}
+
+export function contato() {
+  return `
+    <header class="cabecalho-pagina">
+      <p class="eyebrow">Contato</p>
+      <h1>Fale com a gente</h1>
+      <p class="lead">A sede fica aberta de segunda a sexta, das 8h às 18h. Para doações e parcerias, prefira o e-mail.</p>
+    </header>
+    <div class="contato">
+      <div class="bloco">
+        <h2>Sede</h2>
+        <address>
+          <span>Rua das Palmeiras, 380 - Jardim Oriente</span>
+          <span>Piracicaba/SP, CEP 13403-560</span>
+          <a href="tel:+551934210000">(19) 3421-0000</a>
+          <a href="mailto:contato@raizesdobairro.org.br">contato@raizesdobairro.org.br</a>
+        </address>
+      </div>
+      <div class="bloco">
+        <h2>Transparência</h2>
+        <p>Relatório anual de atividades e prestação de contas disponíveis para consulta na sede e por e-mail.</p>
+        <p>CNPJ 00.000.000/0001-00 · Fundado em março de 2014</p>
+      </div>
+    </div>`;
+}
+
+export function naoEncontrado() {
+  return `<header class="cabecalho-pagina"><h1>Página não encontrada</h1><p class="lead">O endereço não existe. <a href="#/">Voltar ao início</a>.</p></header>`;
+}
+
+
+===================== js/modules/store.js =====================
+// store.js - camada de persistência em localStorage (única que conhece a chave e o JSON)
+const CHAVE = 'raizes.voluntarios.v1';
+const CHAVE_RASCUNHO = 'raizes.cadastro.rascunho';
+
+function ler(chave, padrao) {
+  try { return JSON.parse(localStorage.getItem(chave)) ?? padrao; }
+  catch { return padrao; } // JSON corrompido ou localStorage bloqueado
+}
+function gravar(chave, valor) {
+  try { localStorage.setItem(chave, JSON.stringify(valor)); return true; }
+  catch (e) { console.error('Falha ao gravar no localStorage', e); return false; }
+}
+
+export const store = {
+  listar() { return ler(CHAVE, []); },
+  buscar(termo = '') {
+    const t = termo.trim().toLowerCase();
+    return this.listar().filter((v) => !t || v.nome.toLowerCase().includes(t) || (v.projeto || '').includes(t));
+  },
+  existeCpf(cpf) { return this.listar().some((v) => v.cpf === cpf); },
+  adicionar(voluntario) {
+    const lista = this.listar();
+    const registro = { ...voluntario, id: crypto.randomUUID(), criadoEm: new Date().toISOString() };
+    lista.push(registro);
+    return gravar(CHAVE, lista) ? registro : null;
+  },
+  remover(id) { return gravar(CHAVE, this.listar().filter((v) => v.id !== id)); },
+  limparTudo() { localStorage.removeItem(CHAVE); },
+  salvarRascunho(dados) { gravar(CHAVE_RASCUNHO, dados); },
+  lerRascunho() { return ler(CHAVE_RASCUNHO, {}); },
+  apagarRascunho() { localStorage.removeItem(CHAVE_RASCUNHO); }
+};
+
+
+===================== js/modules/validacao.js =====================
+// validacao.js - regras de negócio do cadastro; devolve um mapa { campo: mensagem }
+export function cpfValido(cpf) {
+  const d = cpf.replace(/\D/g, '');
+  if (d.length !== 11 || /^(\d)\1{10}$/.test(d)) return false;
+  const calc = (n) => { let s = 0; for (let i = 0; i < n; i++) s += +d[i] * (n + 1 - i); const r = (s * 10) % 11; return r === 10 ? 0 : r; };
+  return calc(9) === +d[9] && calc(10) === +d[10];
+}
+
+export function idade(dataISO) {
+  const n = new Date(dataISO); const h = new Date();
+  let a = h.getFullYear() - n.getFullYear();
+  if (h < new Date(h.getFullYear(), n.getMonth(), n.getDate())) a--;
+  return a;
+}
+
+export function validarCadastro(dados, { cpfJaExiste = false } = {}) {
+  const erros = {};
+  if (!dados.nome || dados.nome.trim().length < 5) erros.nome = 'Informe o nome completo (mínimo 5 letras).';
+  else if (!/\s/.test(dados.nome.trim())) erros.nome = 'Informe nome e sobrenome.';
+  if (!dados.cpf) erros.cpf = 'CPF é obrigatório.';
+  else if (!cpfValido(dados.cpf)) erros.cpf = 'CPF inválido: confira os dígitos.';
+  else if (cpfJaExiste) erros.cpf = 'Este CPF já está cadastrado.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(dados.email || '')) erros.email = 'Digite um e-mail válido (ex.: nome@dominio.com).';
+  if (!/^\(\d{2}\) \d{4,5}-\d{4}$/.test(dados.telefone || '')) erros.telefone = 'Telefone no formato (19) 99999-9999.';
+  if (!dados.nascimento) erros.nascimento = 'Informe a data de nascimento.';
+  else { const i = idade(dados.nascimento); if (i < 16) erros.nascimento = 'É preciso ter 16 anos ou mais.'; else if (i > 100) erros.nascimento = 'Data inválida.'; }
+  if (!/^\d{5}-\d{3}$/.test(dados.cep || '')) erros.cep = 'CEP no formato 13400-000.';
+  if (!dados.projeto) erros.projeto = 'Escolha um projeto.';
+  const h = Number(dados.horas);
+  if (!Number.isInteger(h) || h < 1 || h > 20) erros.horas = 'Entre 1 e 20 horas por semana.';
+  if (!dados.areas || dados.areas.length === 0) erros.areas = 'Marque pelo menos uma área.';
+  if (!dados.lgpd) erros.lgpd = 'É necessário autorizar o uso dos dados.';
+  return erros;
+}
+
+
+===================== js/modules/mascaras.js =====================
+// mascaras.js - formatação de CPF, telefone e CEP durante a digitação
+export const somenteDigitos = (v) => v.replace(/\D/g, '');
+export const mascaraCPF = (v) => somenteDigitos(v).slice(0, 11).replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+export const mascaraTelefone = (v) => { const d = somenteDigitos(v).slice(0, 11); return d.length > 10 ? d.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3') : d.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3').replace(/-$/, ''); };
+export const mascaraCEP = (v) => somenteDigitos(v).slice(0, 8).replace(/(\d{5})(\d)/, '$1-$2');
+
+export function aplicarMascaras(form) {
+  const mapa = { cpf: mascaraCPF, telefone: mascaraTelefone, cep: mascaraCEP };
+  Object.entries(mapa).forEach(([id, fn]) => {
+    const el = form.querySelector('#' + id);
+    el?.addEventListener('input', () => { el.value = fn(el.value); });
+  });
+}
+
+
+===================== js/modules/ui.js =====================
+// ui.js - componentes de feedback (toast, modal) e menu; não conhece regras de negócio
+const toast = document.getElementById('toast');
+const modal = document.getElementById('modal');
+let timerToast;
+
+export function mostrarToast(mensagem, tipo = 'sucesso') {
+  toast.textContent = mensagem;
+  toast.classList.toggle('toast-erro', tipo === 'erro');
+  toast.classList.add('visivel');
+  clearTimeout(timerToast);
+  timerToast = setTimeout(() => toast.classList.remove('visivel'), 4000);
+}
+
+// Devolve uma Promise<boolean>: true se o usuário confirmar
+export function confirmar(titulo, texto) {
+  modal.querySelector('#modal-titulo').textContent = titulo;
+  modal.querySelector('#modal-texto').textContent = texto;
+  modal.showModal();
+  return new Promise((resolve) => {
+    const fim = (ok) => { modal.close(); modal.removeEventListener('click', aoClicar); resolve(ok); };
+    const aoClicar = (e) => { const b = e.target.closest('[data-modal]'); if (b) fim(b.dataset.modal === 'ok'); };
+    modal.addEventListener('click', aoClicar);
+    modal.addEventListener('cancel', () => fim(false), { once: true });
+  });
+}
+
+export function iniciarMenu() {
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.getElementById('menu');
+  toggle.addEventListener('click', () => {
+    const aberto = menu.classList.toggle('aberto');
+    toggle.setAttribute('aria-expanded', String(aberto));
+  });
+  // Delegação: um listener para todos os botões de submenu
+  menu.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tem-submenu > button');
+    if (btn) btn.setAttribute('aria-expanded', String(btn.getAttribute('aria-expanded') !== 'true'));
+    if (e.target.closest('a')) { menu.classList.remove('aberto'); toggle.setAttribute('aria-expanded', 'false'); }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { document.querySelectorAll('[aria-expanded="true"]').forEach((b) => b.setAttribute('aria-expanded', 'false')); menu.classList.remove('aberto'); }
+  });
+}
+
+export function marcarRotaAtiva(caminho) {
+  document.querySelectorAll('#menu a[data-rota]').forEach((a) => {
+    const ativa = a.dataset.rota === '/' ? caminho === '/' : caminho.startsWith(a.dataset.rota);
+    if (ativa) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+  });
+}
+
+// Modo escuro manual: sobrepõe a preferência do sistema e persiste no localStorage
+export function iniciarTema() {
+  const btn = document.getElementById('tema-toggle');
+  if (!btn) return;
+  const raiz = document.documentElement;
+  const sistemaEscuro = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const atual = () => raiz.dataset.tema || (sistemaEscuro() ? 'escuro' : 'claro');
+  const aplicar = (tema) => {
+    raiz.dataset.tema = tema;
+    btn.setAttribute('aria-pressed', String(tema === 'escuro'));
+    try { localStorage.setItem('raizes.tema', tema); } catch { /* storage indisponível: só não persiste */ }
+  };
+  btn.setAttribute('aria-pressed', String(atual() === 'escuro'));
+  btn.addEventListener('click', () => aplicar(atual() === 'escuro' ? 'claro' : 'escuro'));
+}
+
+
+===================== js/modules/grafico.js =====================
+// grafico.js - adaptador da biblioteca externa Chart.js (carregada via CDN em index.html)
+// Isola a dependência: o resto da aplicação só chama desenharGrafico(canvas, dados)
+import { projetos } from '../data/projetos.js';
+
+let instancia = null; // guarda o gráfico atual para destruir antes de redesenhar
+let carregando = null;
+
+// Carrega o Chart.js (71 KB) sob demanda, só quando a tela de voluntários é aberta
+export function carregarChart() {
+  if (window.Chart) return Promise.resolve(window.Chart);
+  if (!carregando) {
+    carregando = new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js';
+      s.async = true;
+      s.onload = () => resolve(window.Chart);
+      s.onerror = () => { carregando = null; reject(new Error('Chart.js indisponível')); };
+      document.head.appendChild(s);
+    });
+  }
+  return carregando;
+}
+
+export async function desenharGrafico(canvas, voluntarios) {
+  if (!canvas) return null;
+  try { await carregarChart(); } catch { return null; } // CDN indisponível: a tabela continua funcionando
+  if (!canvas.isConnected) return null; // usuário já trocou de tela
+  const cor = (nome) => getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+  const rotulos = projetos.map((p) => p.nome);
+  const valores = projetos.map((p) => voluntarios.filter((v) => v.projeto === p.slug).length);
+  instancia?.destroy();
+  instancia = new window.Chart(canvas, {
+    type: 'bar',
+    data: { labels: rotulos, datasets: [{ label: 'Voluntários', data: valores, backgroundColor: [cor('--cor-primaria-700'), cor('--cor-secundaria-500'), cor('--cor-primaria-500')], borderRadius: 6 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { precision: 0, color: cor('--cor-neutra-600') }, grid: { color: cor('--cor-neutra-300') } }, x: { ticks: { color: cor('--cor-neutra-600') } } }
+    }
+  });
+  return instancia;
+}
+
+
+===================== js/modules/cadastro.js =====================
+// cadastro.js - controlador da tela de cadastro: eventos, validação, persistência
+import * as T from './templates.js';
+import { store } from './store.js';
+import { aplicarMascaras } from './mascaras.js';
+import { validarCadastro } from './validacao.js';
+import { mostrarToast, confirmar } from './ui.js';
+import { navegar } from './router.js';
+
+function lerFormulario(form) {
+  const fd = new FormData(form);
+  const dados = Object.fromEntries(fd.entries());
+  dados.areas = fd.getAll('areas');
+  dados.lgpd = fd.has('lgpd');
+  dados.nome = (dados.nome || '').trim();
+  return dados;
+}
+
+function mostrarErros(form, erros) {
+  form.querySelectorAll('.campo-erro').forEach((p) => { p.textContent = ''; });
+  form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+  Object.entries(erros).forEach(([campo, msg]) => {
+    const p = form.querySelector('#erro-' + campo);
+    if (p) p.textContent = msg;
+    const el = form.querySelector('#' + campo);
+    if (el) el.setAttribute('aria-invalid', 'true');
+  });
+  const primeiro = Object.keys(erros)[0];
+  form.querySelector('#' + primeiro)?.focus();
+}
+
+export function renderCadastro(app, params) {
+  app.innerHTML = T.cadastro({ dados: store.lerRascunho(), projetoSugerido: params.projeto });
+  const form = app.querySelector('#form-cadastro');
+  const status = form.querySelector('#mensagem-status');
+  const contador = form.querySelector('#contador-mensagem');
+  const mensagem = form.querySelector('#mensagem');
+  aplicarMascaras(form);
+
+  const atualizarContador = () => { contador.textContent = `${mensagem.value.length}/500`; };
+  atualizarContador();
+  mensagem.addEventListener('input', atualizarContador);
+
+  // Rascunho automático: cada alteração salva no localStorage (debounce simples)
+  let timer;
+  form.addEventListener('input', () => {
+    clearTimeout(timer);
+    timer = setTimeout(() => store.salvarRascunho(lerFormulario(form)), 300);
+  });
+
+  // Validação por campo: ao sair dele (blur) e, se já estiver com erro, a cada tecla (input)
+  const validarCampo = (el) => {
+    const campo = el.name;
+    if (!campo) return;
+    const erros = validarCadastro(lerFormulario(form));
+    const p = form.querySelector('#erro-' + campo);
+    if (p) p.textContent = erros[campo] || '';
+    el.toggleAttribute('aria-invalid', Boolean(erros[campo]));
+  };
+  form.addEventListener('focusout', (e) => validarCampo(e.target));
+  form.addEventListener('input', (e) => { if (e.target.hasAttribute('aria-invalid') || form.querySelector('#erro-' + e.target.name)?.textContent) validarCampo(e.target); });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const dados = lerFormulario(form);
+    const erros = validarCadastro(dados, { cpfJaExiste: store.existeCpf(dados.cpf) });
+    if (Object.keys(erros).length) {
+      mostrarErros(form, erros);
+      status.className = 'status falha';
+      status.setAttribute('role', 'alert'); // interrompe o leitor de tela: há erro
+      status.textContent = `Corrija ${Object.keys(erros).length} campo(s) destacado(s).`;
+      mostrarToast('Há campos com erro no formulário.', 'erro');
+      return;
+    }
+    const btn = form.querySelector('#btn-enviar');
+    btn.classList.add('carregando'); btn.disabled = true;
+    setTimeout(() => { // simula latência de envio
+      const salvo = store.adicionar(dados);
+      btn.classList.remove('carregando'); btn.disabled = false;
+      if (!salvo) { status.className = 'status falha'; status.textContent = 'Não foi possível salvar. Verifique o armazenamento do navegador.'; return; }
+      store.apagarRascunho();
+      status.setAttribute('role', 'status');
+      status.className = 'status ok';
+      status.textContent = `Cadastro de ${salvo.nome} salvo com sucesso!`;
+      mostrarToast('Cadastro enviado! Obrigado por se voluntariar.');
+      setTimeout(() => navegar('/voluntarios'), 1200);
+    }, 600);
+  });
+
+  form.querySelector('#btn-limpar').addEventListener('click', async () => {
+    if (await confirmar('Limpar formulário?', 'Os dados digitados e o rascunho salvo serão apagados.')) {
+      store.apagarRascunho();
+      renderCadastro(app, params);
+      mostrarToast('Formulário limpo.');
+    }
+  });
+}
+
+
+===================== js/modules/voluntarios.js =====================
+// voluntarios.js - listagem, busca, remoção e exportação dos registros do localStorage
+import * as T from './templates.js';
+import { store } from './store.js';
+import { mostrarToast, confirmar } from './ui.js';
+import { desenharGrafico } from './grafico.js';
+
+export function renderVoluntarios(app, params) {
+  let filtro = params.q || '';
+  const desenhar = () => {
+    app.innerHTML = T.voluntarios(store.buscar(filtro), filtro);
+    desenharGrafico(app.querySelector('#grafico-projetos'), store.listar()); // gráfico sempre com o total, não com o filtro
+  };
+  desenhar();
+
+  // Delegação de eventos no container: sobrevive a re-renderizações
+  app.addEventListener('input', (e) => {
+    if (e.target.id === 'busca') {
+      filtro = e.target.value;
+      const tabela = app.querySelector('.tabela-wrap, .vazio');
+      const novo = document.createElement('div');
+      novo.innerHTML = T.voluntarios(store.buscar(filtro), filtro);
+      tabela?.replaceWith(novo.querySelector('.tabela-wrap, .vazio'));
+      app.querySelector('.lead').textContent = `Lista salva localmente no navegador (localStorage). ${store.buscar(filtro).length} registro(s).`;
+    }
+  });
+
+  app.addEventListener('click', async (e) => {
+    const remover = e.target.closest('[data-remover]');
+    if (remover) {
+      if (await confirmar('Remover voluntário?', 'O registro será apagado do armazenamento local.')) {
+        store.remover(remover.dataset.remover); desenhar(); mostrarToast('Registro removido.');
+      }
+    }
+    if (e.target.id === 'btn-limpar-tudo') {
+      if (await confirmar('Apagar todos os cadastros?', 'Esta ação não pode ser desfeita.')) {
+        store.limparTudo(); desenhar(); mostrarToast('Todos os registros foram apagados.');
+      }
+    }
+    if (e.target.id === 'btn-exportar') {
+      const blob = new Blob([JSON.stringify(store.listar(), null, 2)], { type: 'application/json' });
+      const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'voluntarios.json' });
+      a.click(); URL.revokeObjectURL(a.href);
+      mostrarToast('Arquivo voluntarios.json gerado.');
+    }
+  });
+}
+
+
+===================== scripts/build.mjs =====================
+// Build de produção: gera dist/ com JS empacotado e minificado, CSS minificado,
+// imagens copiadas e index.html na raiz com caminhos ajustados e hash de cache.
+import { build } from 'esbuild';
+import { cp, mkdir, readFile, rm, writeFile, readdir, stat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+
+const raiz = path.resolve(import.meta.dirname, '..');
+const dist = path.join(raiz, 'dist');
+
+await rm(dist, { recursive: true, force: true });
+await mkdir(path.join(dist, 'js'), { recursive: true });
+await mkdir(path.join(dist, 'css'), { recursive: true });
+
+// 1) JS: todos os módulos viram um único arquivo (menos requisições), minificado, com sourcemap
+const js = await build({
+  entryPoints: [path.join(raiz, 'js/main.js')],
+  bundle: true, minify: true, sourcemap: true, format: 'esm', target: ['es2020'],
+  outfile: path.join(dist, 'js/main.js'), metafile: true, write: true
+});
+
+// 2) CSS: reset + style concatenados e minificados
+await build({
+  entryPoints: [path.join(raiz, 'css/reset.css'), path.join(raiz, 'css/fonts.css'), path.join(raiz, 'css/style.css')],
+  bundle: true, minify: true, outdir: path.join(dist, 'css'), loader: { '.png': 'file', '.jpg': 'file' }, external: ['*.woff2']
+});
+
+// 3) Imagens
+await cp(path.join(raiz, 'img'), path.join(dist, 'img'), { recursive: true });
+await cp(path.join(raiz, 'fonts'), path.join(dist, 'fonts'), { recursive: true });
+
+// 4) HTML: sai de html/index.html para dist/index.html; caminhos ../ viram ./ e ganham hash para cache
+const hash = (buf) => createHash('md5').update(buf).digest('hex').slice(0, 8);
+const hJs = hash(await readFile(path.join(dist, 'js/main.js')));
+const hCss = hash(await readFile(path.join(dist, 'css/style.css')));
+let html = await readFile(path.join(raiz, 'html/index.html'), 'utf8');
+html = html
+  .replace('  <base href="../">\n', '')
+  .replace('<link rel="stylesheet" href="css/reset.css">\n', '')
+  .replace('<link rel="stylesheet" href="css/fonts.css">\n', '')
+  .replace('css/style.css', `css/style.css?v=${hCss}`)
+  .replace('js/main.js', `js/main.js?v=${hJs}`)
+  .replace(/\n\s*<!--[^>]*-->/g, '')
+  .replace(/>\s+</g, '><').trim();
+await writeFile(path.join(dist, 'index.html'), html);
+// .nojekyll evita que o GitHub Pages ignore arquivos/pastas com underscore
+await writeFile(path.join(dist, '.nojekyll'), '');
+
+// 5) Relatório de tamanho
+async function tamanho(dir) {
+  let total = 0;
+  for (const e of await readdir(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    total += e.isDirectory() ? await tamanho(p) : (await stat(p)).size;
+  }
+  return total;
+}
+const kb = (n) => (n / 1024).toFixed(1) + ' KB';
+console.log('dist/js/main.js  ', kb((await stat(path.join(dist, 'js/main.js'))).size));
+console.log('dist/css/style.css', kb((await stat(path.join(dist, 'css/style.css'))).size));
+console.log('dist/ total       ', kb(await tamanho(dist)));
+
+
+===================== .github/workflows/deploy.yml =====================
+name: Build e deploy (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+
+===================== .github/workflows/ci.yml =====================
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Valida HTML gerado (W3C Nu)
+        run: |
+          curl -s -H "Content-Type: text/html; charset=utf-8" --data-binary @dist/index.html \
+            "https://validator.w3.org/nu/?out=json" | tee w3c.json
+          node -e "const r=require('./w3c.json'); const e=r.messages.filter(m=>m.type==='error'); if(e.length){console.error(e);process.exit(1)}"
+
+
+===================== CHANGELOG.md =====================
+# Changelog
+
+Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/); versionamento [SemVer](https://semver.org/lang/pt-BR/).
+
+## [1.3.1] - 2026-09-14
+
+### Corrigido
+- Anel de foco aparecia no h1 a cada troca de rota (foco programático).
+- Brilho decorativo do hero invadia a faixa de números em telas altas e no modo escuro.
+
+## [1.3.0] - 2026-09-14
+
+### Alterado
+- Redesign completo: nova paleta (papel, verde, terracota, mostarda), fontes Bricolage Grotesque e Instrument Sans self-hosted, hero assimétrico com selo, faixa de números, depoimento, seção "Como ajudar", chamada final e rodapé em colunas.
+- Fotos reais (Unsplash) em WebP responsivo substituem os placeholders; créditos em img/CREDITOS.md.
+- Páginas de projeto com ficha lateral fixa; cadastro com coluna "O que acontece depois".
+
+### Corrigido
+- Submenu abria no mobile por especificidade de `.menu ul`.
+- Overflow horizontal no mobile causado pelo brilho decorativo do hero.
+
+## [1.2.0] - 2026-09-13
+
+### Adicionado
+- Imagens em WebP com `<picture>`, `srcset`/`sizes`, `loading="lazy"` e `fetchpriority="high"` no hero.
+- Chart.js carregado sob demanda apenas na tela de voluntários (-71 KB na home).
+
+### Corrigido
+- Contraste de botões, badges, rodapé e toast no modo escuro (tokens de superfície).
+- Nome acessível do botão de tema igual ao texto visível.
+- CLS zerado com `aspect-ratio` nas imagens.
+
+## [1.1.0] - 2026-09-13
+
+### Adicionado
+- Modo escuro automático (prefers-color-scheme) e manual (botão Tema), com todos os pares de cor acima de 4,5:1.
+
+## [1.0.1] - 2026-09-13
+
+### Corrigido
+- Layout shift do rodapé durante a troca de rota (CLS 0,16 -> 0): `#app` reserva altura mínima.
+
+## [1.0.0] - 2026-09-13
+
+### Adicionado
+- Páginas semânticas (início, projetos, cadastro) com formulário validado (EP1).
+- Design system com tokens, grid de 12 colunas, 5 breakpoints, menu responsivo com dropdown/hambúrguer e componentes de feedback (EP2).
+- SPA com router hash-based, templates dinâmicos, validação de formulário, localStorage e gráfico Chart.js (EP3).
+- Conformidade WCAG 2.1 AA documentada em docs/acessibilidade.md, build com esbuild e deploy contínuo no GitHub Pages (EP4).
+
+### Corrigido
+- Router: rota coringa `*` não compila mais uma regex inválida.
+- Contraste do foco e da cor de aviso.
